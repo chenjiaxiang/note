@@ -1,0 +1,33 @@
+site_name: jxchen-blog
+theme:
+    name: 'material'
+    language: 'zh'
+    palette:
+      scheme: "slate" # 暗黑模式
+    font:
+      text: "Roboto"
+      code: "Roboto Mono"
+    # logo: "images/logo.png"
+
+nav:
+  - Home: index.md
+  - About: about.md
+
+# 插件设置， 自动生成侧边栏目录
+plugins:
+  - search
+  - toc:
+    premalink: true
+  
+# markdown 扩展
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - toc:
+    premalink: true
+
+extra_css:
+  - https://cdn.tonycrane.cc/utils/katex.min.css
+  - https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css
+  - https://cdn.tonycrane.cc/lxgw/lxgwscreen.css
