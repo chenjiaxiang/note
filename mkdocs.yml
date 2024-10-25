@@ -16,16 +16,18 @@ nav:
 # 插件设置， 自动生成侧边栏目录
 plugins:
   - search
-  - toc:
-    premalink: true
+  # - toc:
+  #   premalink: true
   
 # markdown 扩展
 markdown_extensions:
   - admonition
+  - pymdownx.superfences
   - codehilite
+    # guess_lang: false
   - footnotes
-  - toc:
-    premalink: true
+  # - toc:
+  #   premalink: true
 
 extra_css:
   - https://cdn.tonycrane.cc/utils/katex.min.css
