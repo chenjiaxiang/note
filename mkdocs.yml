@@ -12,6 +12,7 @@ theme:
 nav:
   - Home: index.md
   - About: about.md
+  - Language: language.md
 
 # 插件设置， 自动生成侧边栏目录
 plugins:
