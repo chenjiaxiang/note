@@ -1,4 +1,5 @@
-site_name: My Docs
+site_name: jxchen's Notes
+site_url: https://chenjiaxiang.github.io/note
 
 extra_css:
   - https://cdn.tonycrane.cc/utils/katex.min.css
