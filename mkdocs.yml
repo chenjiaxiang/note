@@ -1,36 +1,125 @@
-site_name: jxchen-blog
+site_name: jiaxiangchen的笔记本
+site_description: jiaxiangchen的个人笔记本
+
 theme:
-    name: 'material'
-    language: 'zh'
-    palette:
-      scheme: "slate" # 暗黑模式
-    font:
-      text: "Roboto"
-      code: "Roboto Mono"
-    # logo: "images/logo.png"
+  name: 'material'
+  language: 'zh'
+  icon:
+    logo: material/notebook-outline
+  features:
+    - content.code.annotate
+    - navigation.tracking
+    - navigation.top
+    - navigation.tabs
+    - navigation.footer
+    - navigation.indexes
+  font: false
+  palette:
+    - scheme: slate
+      primary: indigo
 
-nav:
-  - Home: index.md
-  - About: about.md
-  - Language: language.md
+markdown_extensions:
+  - toc:
+      permalink: true
+      toc_depth: 4
+  - meta
+  - def_list
+  - attr_list
+  - md_in_html
+  - sane_lists
+  - admonition
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
 
-# 插件设置， 自动生成侧边栏目录
 plugins:
   - search
-  # - toc:
-  #   premalink: true
-  
-# markdown 扩展
-markdown_extensions:
-  - admonition
-  - pymdownx.superfences
-  - codehilite
-    # guess_lang: false
-  - footnotes
-  # - toc:
-  #   premalink: true
 
 extra_css:
   - https://cdn.tonycrane.cc/utils/katex.min.css
   - https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css
   - https://cdn.tonycrane.cc/lxgw/lxgwscreen.css
+  - css/custom.css
+  - css/card.css
+  - css/toc_extra.css
+
+extra_javascript:
+  - https://cdn.tonycrane.cc/utils/katex.min.js
+  - js/katex.js
+
+nav:
+  - Home:
+    - index.md
+  - Japanese:
+    - japanese/index.md
+    - 语法笔记:
+      - 第1课: japanese/gramma/class_1.md
+      - 第2课: japanese/gramma/class_2.md
+      - 第3课: japanese/gramma/class_3.md
+      - 第4课: japanese/gramma/class_4.md
+      - 第5课: japanese/gramma/class_5.md
+      - 第6课: japanese/gramma/class_6.md
+      - 第7课: japanese/gramma/class_7.md
+      - 第8课: japanese/gramma/class_8.md
+      - 第9课: japanese/gramma/class_9.md
+      - 第10课: japanese/gramma/class_10.md
+      - 第11课: japanese/gramma/class_11.md
+      - 第12课: japanese/gramma/class_12.md
+      - 第13课: japanese/gramma/class_13.md
+      - 第14课: japanese/gramma/class_14.md
+      - 第15课: japanese/gramma/class_15.md
+      - 第16课: japanese/gramma/class_16.md
+      - 第17课: japanese/gramma/class_17.md
+      - 第18课: japanese/gramma/class_18.md
+      - 第19课: japanese/gramma/class_19.md
+      - 第20课: japanese/gramma/class_20.md
+      - 第21课: japanese/gramma/class_21.md
+      - 第22课: japanese/gramma/class_22.md
+      - 第23课: japanese/gramma/class_23.md
+      - 第24课: japanese/gramma/class_24.md
+      - 第25课: japanese/gramma/class_25.md
+      - 第26课: japanese/gramma/class_26.md
+      - 第27课: japanese/gramma/class_27.md
+      - 第28课: japanese/gramma/class_28.md
+      - 第29课: japanese/gramma/class_29.md
+      - 第30课: japanese/gramma/class_30.md
+      - 第31课: japanese/gramma/class_31.md
+      - 第32课: japanese/gramma/class_32.md
+      - 第33课: japanese/gramma/class_33.md
+      - 第33课补充: japanese/gramma/class_33_supplement.md
+      - 第34课: japanese/gramma/class_34.md
+      - 第35课: japanese/gramma/class_35.md
+      - 第36课: japanese/gramma/class_36.md
+      - 第37课: japanese/gramma/class_37.md
+      - 第38课: japanese/gramma/class_38.md
+      - 动词变形2: japanese/gramma/verb_transform_2.md
+    - 词汇:
+      - 形容词: japanese/word/adjective.md
+      - 名词转换: japanese/word/noun_transform.md
+      - 位置词: japanese/word/position.md
+      - 动词变形: japanese/word/verb_transform.md
+      - 星期: japanese/word/week.md
+    - 补充:
+      - 疑问表达: japanese/supplement/ask.md
+    - 综合整理:
+      - 语法整理: japanese/aggregation/gramma.md
+      - 日语整理: japanese/aggregation/japanese.md
+      - 词汇整理: japanese/aggregation/word.md
+  - About: about.md

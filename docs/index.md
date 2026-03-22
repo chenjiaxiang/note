@@ -1,17 +1,37 @@
-# Welcome to MkDocs
+---
+hide:
+    - navigation
+    - toc
+---
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+# jiaxiangchen的笔记本
 
-## Commands
+这里是jiaxiangchen的个人笔记本。
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## Table of Contents
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+<div class="index-item-wrapper">
+<div class="title-wrapper">Japanese 日语学习笔记</div>
+<ul class="content-item-wrapper">
+  <li>
+    <div class="item-primary"><a href="japanese/">日语学习笔记总览</a></div>
+    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
+  </li>
+  <li>
+    <div class="item-primary"><a href="japanese/gramma/class_1/">语法笔记（第1-10课）</a></div>
+    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
+  </li>
+  <li>
+    <div class="item-primary"><a href="japanese/gramma/class_11/">语法笔记（第11-20课）</a></div>
+    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
+  </li>
+  <li>
+    <div class="item-primary"><a href="japanese/gramma/class_21/">语法笔记（第21-38课）</a></div>
+    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
+  </li>
+  <li>
+    <div class="item-primary"><a href="japanese/aggregation/gramma/">综合整理</a></div>
+    <div class="item-metadata"></div>
+  </li>
+</ul>
+</div>
