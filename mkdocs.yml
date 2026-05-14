@@ -123,6 +123,9 @@ nav:
       - 日语整理: japanese/aggregation/japanese.md
       - 词汇整理: japanese/aggregation/word.md
   - Speech:
+    - 语音特征提取:
+      - 从人发声到 MFCC: speech/feature_extract/speech_feature_blog.md
+      - 人耳听觉与特征提取: speech/feature_extract/hearing_vs_feature_extraction.md
     - ASR技术发展:
       - HMM-GMM 统计基石: speech/asr/01_hmm_gmm.md
       - DNN-HMM 深度混合: speech/asr/02_dnn_hmm.md
