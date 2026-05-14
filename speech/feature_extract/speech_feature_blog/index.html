@@ -1,0 +1,2598 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="jiaxiangchen的个人笔记本">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.36">
+    
+    
+      
+        <title>从人发声到 MFCC：一篇看懂语音是怎么变成特征的 - jiaxiangchen的笔记本</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.06209087.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/utils/katex.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/lxgw/lxgwscreen.css">
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+      <link rel="stylesheet" href="../../../css/card.css">
+    
+      <link rel="stylesheet" href="../../../css/toc_extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mfcc" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="jiaxiangchen的笔记本" class="md-header__button md-logo" aria-label="jiaxiangchen的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4zM3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm2-2v2h2V5zm0 14h2v-2H5zm0-6h2v-2H5z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            jiaxiangchen的笔记本
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              从人发声到 MFCC：一篇看懂语音是怎么变成特征的
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../japanese/" class="md-tabs__link">
+          
+  
+    
+  
+  Japanese
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../asr/01_hmm_gmm/" class="md-tabs__link">
+          
+  
+    
+  
+  Speech
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about/" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="jiaxiangchen的笔记本" class="md-nav__button md-logo" aria-label="jiaxiangchen的笔记本" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4zM3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm2-2v2h2V5zm0 14h2v-2H5zm0-6h2v-2H5z"/></svg>
+
+    </a>
+    jiaxiangchen的笔记本
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../japanese/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Japanese
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Japanese
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    语法笔记
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            语法笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第1课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第2课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第3课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第4课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第5课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第6课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第7课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第8课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第9课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第10课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第11课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第12课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_13/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第13课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_14/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第14课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_15/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第15课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_16/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第16课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_17/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第17课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_18/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第18课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_19/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第19课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_20/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第20课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_21/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第21课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_22/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第22课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_23/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第23课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_24/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第24课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_25/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第25课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_26/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第26课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_27/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第27课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_28/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第28课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第29课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_30/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第30课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_31/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第31课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_32/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第32课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_33/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第33课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_33_supplement/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第33课补充
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_34/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第34课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_35/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第35课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_36/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第36课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_37/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第37课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_38/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第38课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/verb_transform_2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    动词变形2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    词汇
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            词汇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/adjective/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    形容词
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/noun_transform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    名词转换
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/position/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    位置词
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/verb_transform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    动词变形
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/week/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    星期
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    补充
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            补充
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/supplement/ask/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    疑问表达
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    综合整理
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            综合整理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/aggregation/gramma/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    语法整理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/aggregation/japanese/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    日语整理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/aggregation/word/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    词汇整理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Speech
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Speech
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ASR技术发展
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            ASR技术发展
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/01_hmm_gmm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HMM-GMM 统计基石
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/02_dnn_hmm/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    DNN-HMM 深度混合
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/03_ctc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CTC 端到端训练
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/04_rnn_t/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RNN-T 流式识别
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/05_conformer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conformer 骨干网络
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/06_self_supervised/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    自监督语音预训练
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/07_whisper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Whisper 弱监督大规模
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/08_qwen_audio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Qwen-Audio 语音大模型
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 语音是怎么形成的
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 为什么不能直接拿整段波形做分析
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 为什么不能直接拿整段波形做分析">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      预加重是在做什么
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 从一帧语音到频谱
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-filter-bank" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 什么是 filter bank 特征
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-mel" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 为什么要用 Mel 尺度
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 为什么还要取对数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-mfcc-mel" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. MFCC 到底比 Mel 谱多做了什么
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. MFCC 到底比 Mel 谱多做了什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 去相关
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 把“平滑包络”和“快速细节”分开
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-stftmel-spectrogrammfcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. STFT、Mel spectrogram、MFCC 三者怎么区分
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. STFT、Mel spectrogram、MFCC 三者怎么区分">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-stft" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 STFT 频谱图
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-mel-spectrogram" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 Mel spectrogram
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-mfcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.3 MFCC
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-mfcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. 一段最核心的 MFCC 代码
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-fbankmel-mfcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. 工程里怎么选：fbank、Mel 还是 MFCC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 工程里怎么选：fbank、Mel 还是 MFCC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#asr" class="md-nav__link">
+    <span class="md-ellipsis">
+      传统 ASR / 说话人识别
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asr_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      现代深度学习 ASR
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      想保留更多细节时
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. 总结
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      12. 参考与复现
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="mfcc">从人发声到 MFCC：一篇看懂语音是怎么变成特征的<a class="headerlink" href="#mfcc" title="Permanent link">&para;</a></h1>
+<p>语音特征提取这件事，本质上是在做一层层“压缩”和“抽象”。</p>
+<p>人说话时，声带振动产生激励，声道形状决定哪些频率被增强，最后通过嘴唇辐射成空气中的声波。麦克风采到的波形，看起来只是随时间起伏的一条曲线，但对语音识别、说话人识别或情感分析来说，我们真正关心的不是“每个采样点具体是多少”，而是这段声音在短时间内的频谱结构，以及这种结构如何随时间变化。</p>
+<p>本文按下面这条链路展开：</p>
+<p><code>发声机制 -&gt; 波形 -&gt; 短时频谱 -&gt; filter bank -&gt; Mel spectrogram -&gt; MFCC</code></p>
+<p>重点会放在三个常见特征上：</p>
+<ul>
+<li><code>filter bank</code> 特征</li>
+<li><code>Mel spectrogram</code>（梅尔谱）</li>
+<li><code>MFCC</code>（Mel-frequency cepstral coefficients）</li>
+</ul>
+<p>文中的图片和代码都来自当前目录下的示例脚本，可直接复现。</p>
+<h2 id="1">1. 语音是怎么形成的<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>可以把人的发声过程粗略理解成一个“激励源 + 滤波器”的系统：</p>
+<ul>
+<li>肺部提供气流</li>
+<li>声带振动产生周期性激励，浊音尤其明显</li>
+<li>声道形状对不同频率有不同增益，形成共振峰</li>
+<li>嘴唇和鼻腔把声音辐射到空气中</li>
+</ul>
+<p>这个观点非常重要，因为它解释了为什么后面的频谱特征有效：</p>
+<ul>
+<li>激励源决定了基音和谐波结构</li>
+<li>声道决定了谱包络，也就是“整体频谱外形”</li>
+<li>不同音素最稳定、最有区分度的信息，通常更接近谱包络而不是某一根谐波</li>
+</ul>
+<p>所以，语音特征提取并不是简单地对波形做压缩，而是在尽量保留“声道形状”相关信息，弱化对识别帮助较小的细节。</p>
+<h2 id="2">2. 为什么不能直接拿整段波形做分析<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>语音是典型的非平稳信号。整段音频从头到尾都在变化，但在很短的一段时间内，比如 <code>20ms ~ 30ms</code>，可以近似认为它是平稳的。</p>
+<p>这就是短时分析的前提。</p>
+<p>实际处理中，常见设置是：</p>
+<ul>
+<li>帧长：<code>25ms</code></li>
+<li>帧移：<code>10ms</code></li>
+<li>每一帧乘一个窗函数，比如 <code>Hamming window</code></li>
+</ul>
+<p>这样做的意义是：</p>
+<ul>
+<li>把持续变化的语音切成很多小片段</li>
+<li>每个片段单独做频谱分析</li>
+<li>最后得到“时间 x 频率”的二维表示</li>
+</ul>
+<p>下面这张图先展示原始波形、预加重后的波形，以及单帧加窗前后的对比。</p>
+<p><img alt="波形与分帧加窗" src="../images/waveform_and_frame.png" /></p>
+<h3 id="_1">预加重是在做什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>语音的高频部分通常能量偏弱，而很多清辅音、齿擦音的重要信息恰好在高频区域。预加重常用一阶高通形式：</p>
+<div class="arithmatex">\[
+y[n] = x[n] - \alpha x[n-1], \quad \alpha \approx 0.95 \sim 0.97
+\]</div>
+<p>它的作用可以理解为：</p>
+<ul>
+<li>略微抬高高频</li>
+<li>让频谱更平坦一些</li>
+<li>减轻后续特征被低频能量主导的问题</li>
+</ul>
+<h2 id="3">3. 从一帧语音到频谱<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>对一帧加窗后的信号做 FFT，就能得到频谱。最常见的不是直接看复数频谱，而是看：</p>
+<ul>
+<li>幅度谱</li>
+<li>功率谱</li>
+</ul>
+<p>功率谱描述了每个频率附近有多少能量。它已经比原始波形更接近“人耳和识别模型真正关心的信息”。</p>
+<p>但这里还有两个问题：</p>
+<ol>
+<li>FFT 的频率分辨率是线性的，人耳的感知却不是线性的。</li>
+<li>频谱里细密的谐波很多，直接拿来做建模既冗余，也容易受说话基频波动影响。</li>
+</ol>
+<p>这时就轮到 <code>filter bank</code> 出场了。</p>
+<p><img alt="功率谱、Mel 能量与 MFCC" src="../images/spectrum_mel_mfcc.png" /></p>
+<h2 id="4-filter-bank">4. 什么是 filter bank 特征<a class="headerlink" href="#4-filter-bank" title="Permanent link">&para;</a></h2>
+<p><code>filter bank</code> 可以理解成一组并排摆放的带通滤波器。每个滤波器只关注某一小段频率范围，把该频段的能量统计出来。</p>
+<p>如果把功率谱记为 <span class="arithmatex">\(P[k]\)</span>，第 <span class="arithmatex">\(m\)</span> 个滤波器记为 <span class="arithmatex">\(H_m[k]\)</span>，那么对应的滤波器组能量大致是：</p>
+<div class="arithmatex">\[
+E_m = \sum_k P[k] H_m[k]
+\]</div>
+<p>直观理解：</p>
+<ul>
+<li>FFT 给出的是非常细的频率采样点</li>
+<li>filter bank 把这些点重新汇总成更粗、更稳定的频带能量</li>
+</ul>
+<p>在语音处理中，最常见的是三角形滤波器组：</p>
+<ul>
+<li>相邻滤波器有重叠</li>
+<li>低频更密，高频更稀</li>
+<li>更接近人的听觉分辨率</li>
+</ul>
+<p>很多时候，大家口中的 <code>fbank</code> 特征，指的就是“每一帧经过 Mel 滤波器组后的能量”，通常再接一个对数。</p>
+<h2 id="5-mel">5. 为什么要用 Mel 尺度<a class="headerlink" href="#5-mel" title="Permanent link">&para;</a></h2>
+<p>人耳对频率的感知并不是线性的。比如从 <code>300Hz</code> 到 <code>600Hz</code> 的变化，和从 <code>5300Hz</code> 到 <code>5600Hz</code> 的变化，主观感受并不相同。</p>
+<p>Mel 尺度是为了模拟这种听觉特性而设计的。常见的近似变换是：</p>
+<div class="arithmatex">\[
+\text{mel}(f) = 2595 \log_{10}\left(1 + \frac{f}{700}\right)
+\]</div>
+<p>它带来的效果是：</p>
+<ul>
+<li>低频区分得更细</li>
+<li>高频分辨率更粗</li>
+<li>整体更符合听觉感知</li>
+</ul>
+<p>因此，在工程上，我们通常不会直接在 Hz 轴上做等宽统计，而是先建立一组 Mel 滤波器，再求每个 Mel 频带的能量。</p>
+<p>这就得到 <code>Mel filter bank energies</code>，也就是很多系统中的 <code>fbank</code> 特征。</p>
+<h2 id="6">6. 为什么还要取对数<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>把 Mel 频带能量取对数后，会得到 <code>log-Mel</code> 特征，也就是常说的 <code>Mel spectrogram</code> 的核心表示。</p>
+<p>取对数主要有三个作用：</p>
+<ul>
+<li>更接近人耳对响度的感知方式</li>
+<li>把巨大的动态范围压缩到更容易建模的区间</li>
+<li>将“乘性影响”转成“加性影响”，便于后续变换</li>
+</ul>
+<p>所以，一个很常见的链路是：</p>
+<p><code>功率谱 -&gt; Mel filter bank -&gt; log -&gt; log-Mel</code></p>
+<p>如果把每一帧的 log-Mel 沿时间拼起来，就是梅尔谱图。</p>
+<h2 id="7-mfcc-mel">7. MFCC 到底比 Mel 谱多做了什么<a class="headerlink" href="#7-mfcc-mel" title="Permanent link">&para;</a></h2>
+<p>MFCC 的核心只比 log-Mel 多一步：</p>
+<p><code>DCT</code></p>
+<p>即：</p>
+<div class="arithmatex">\[
+\text{MFCC} = \text{DCT}(\log\text{-Mel})
+\]</div>
+<p>这一步有两个很实际的意义。</p>
+<h3 id="71">7.1 去相关<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<p>相邻 Mel 频带本来高度相关，因为语音谱包络通常是平滑变化的。DCT 会把这些相关的频带能量重新表达为一组系数，使特征维度之间更接近解耦。</p>
+<p>这对早期的 GMM-HMM、对角协方差模型尤其友好。</p>
+<h3 id="72">7.2 把“平滑包络”和“快速细节”分开<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<p>低阶 MFCC 表示 log-Mel 上变化较慢的部分，可以理解成整体谱包络。</p>
+<p>高阶 MFCC 更对应快速起伏的细节，比如谐波带来的锯齿状变化。</p>
+<p>而识别中真正更稳定的信息，往往集中在低阶部分，所以经典配置通常只保留前 <code>12</code> 或 <code>13</code> 维 MFCC。</p>
+<p>下面这张图展示了只保留部分低阶 MFCC 后，对原始 log-Mel 的重建效果。可以看到，维度越少，保留下来的越是“平滑外形”。</p>
+<p><img alt="MFCC 重建 log-Mel" src="../images/mfcc_reconstruction.png" /></p>
+<p>这正是 MFCC 广泛使用的关键原因：它不是简单压缩，而是在强调谱包络。</p>
+<h2 id="8-stftmel-spectrogrammfcc">8. STFT、Mel spectrogram、MFCC 三者怎么区分<a class="headerlink" href="#8-stftmel-spectrogrammfcc" title="Permanent link">&para;</a></h2>
+<p>从信息量上看，可以把它们理解成一层层抽象：</p>
+<h3 id="81-stft">8.1 STFT 频谱图<a class="headerlink" href="#81-stft" title="Permanent link">&para;</a></h3>
+<ul>
+<li>频率轴是线性的</li>
+<li>保留了丰富的细节和谐波结构</li>
+<li>信息最全，但冗余也更多</li>
+</ul>
+<h3 id="82-mel-spectrogram">8.2 Mel spectrogram<a class="headerlink" href="#82-mel-spectrogram" title="Permanent link">&para;</a></h3>
+<ul>
+<li>把线性频率压缩到 Mel 频率</li>
+<li>对局部频带做汇总</li>
+<li>更贴近听觉，也更平滑</li>
+</ul>
+<h3 id="83-mfcc">8.3 MFCC<a class="headerlink" href="#83-mfcc" title="Permanent link">&para;</a></h3>
+<ul>
+<li>在 log-Mel 基础上再做 DCT</li>
+<li>更突出谱包络</li>
+<li>维度更低，传统建模更方便</li>
+</ul>
+<p>下面这张总览图把三者并排放在一起。</p>
+<p><img alt="STFT、Mel 谱与 MFCC 总览" src="../images/stft_mel_mfcc_overview.png" /></p>
+<p>可以这样理解：</p>
+<ul>
+<li><code>STFT</code> 像是“原材料”</li>
+<li><code>Mel spectrogram</code> 像是“按听觉重新整理后的频谱”</li>
+<li><code>MFCC</code> 像是“进一步抓住谱包络后的紧凑表示”</li>
+</ul>
+<h2 id="9-mfcc">9. 一段最核心的 MFCC 代码<a class="headerlink" href="#9-mfcc" title="Permanent link">&para;</a></h2>
+<p>下面这段代码摘自当前目录中的示例，基本覆盖了从单帧功率谱到 MFCC 的关键步骤：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">librosa</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">from</span> <span class="nn">scipy.fftpack</span> <span class="kn">import</span> <span class="n">dct</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.97</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">x_pre</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">frame_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sr</span> <span class="o">*</span> <span class="mi">25</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">hop_length</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sr</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">frames</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">frame</span><span class="p">(</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">x_pre</span><span class="p">,</span> <span class="n">frame_length</span><span class="o">=</span><span class="n">frame_length</span><span class="p">,</span> <span class="n">hop_length</span><span class="o">=</span><span class="n">hop_length</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="n">window</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hamming</span><span class="p">(</span><span class="n">frame_length</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="n">frames_win</span> <span class="o">=</span> <span class="n">frames</span> <span class="o">*</span> <span class="n">window</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">frame</span> <span class="o">=</span> <span class="n">frames_win</span><span class="p">[:,</span> <span class="n">frames_win</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">]</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="n">n_fft</span> <span class="o">=</span> <span class="mi">1024</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="n">spec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">n_fft</span><span class="p">)</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="n">power</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">n_fft</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="n">n_mels</span> <span class="o">=</span> <span class="mi">40</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="n">mel_fb</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">mel</span><span class="p">(</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>    <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">n_fft</span><span class="o">=</span><span class="n">n_fft</span><span class="p">,</span> <span class="n">n_mels</span><span class="o">=</span><span class="n">n_mels</span><span class="p">,</span> <span class="n">fmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="n">sr</span> <span class="o">/</span> <span class="mi">2</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="p">)</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="n">mel_energy</span> <span class="o">=</span> <span class="n">mel_fb</span> <span class="o">@</span> <span class="n">power</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="n">log_mel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">mel_energy</span> <span class="o">+</span> <span class="mf">1e-10</span><span class="p">)</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="n">mfcc_full</span> <span class="o">=</span> <span class="n">dct</span><span class="p">(</span><span class="n">log_mel</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="s2">&quot;ortho&quot;</span><span class="p">)</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="n">mfcc</span> <span class="o">=</span> <span class="n">mfcc_full</span><span class="p">[:</span><span class="mi">13</span><span class="p">]</span>
+</code></pre></div>
+<p>如果只记这段流程，可以把它概括成：</p>
+<p><code>预加重 -&gt; 分帧 -&gt; 加窗 -&gt; FFT -&gt; 功率谱 -&gt; Mel filter bank -&gt; log -&gt; DCT</code></p>
+<h2 id="10-fbankmel-mfcc">10. 工程里怎么选：fbank、Mel 还是 MFCC<a class="headerlink" href="#10-fbankmel-mfcc" title="Permanent link">&para;</a></h2>
+<p>这三个特征并不是互斥关系，而是抽象层次不同。</p>
+<h3 id="asr">传统 ASR / 说话人识别<a class="headerlink" href="#asr" title="Permanent link">&para;</a></h3>
+<p><code>MFCC</code> 很常见，因为它：</p>
+<ul>
+<li>维度紧凑</li>
+<li>对谱包络表达直接</li>
+<li>和传统统计模型配合良好</li>
+</ul>
+<h3 id="asr_1">现代深度学习 ASR<a class="headerlink" href="#asr_1" title="Permanent link">&para;</a></h3>
+<p><code>log-Mel</code> 或 <code>fbank</code> 更常见，因为神经网络本身可以学习后续变换，不一定还需要手工做 DCT。</p>
+<h3 id="_2">想保留更多细节时<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>可以优先看 <code>Mel spectrogram</code>，它通常比 MFCC 更“接近原始频谱”，可解释性也强。</p>
+<h2 id="11">11. 总结<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<p>语音特征提取可以理解为一个逐步抽象的过程：</p>
+<ol>
+<li>波形包含了所有信息，但不适合直接建模</li>
+<li>短时频谱把语音变成了局部频率结构</li>
+<li><code>filter bank</code> 对频带能量做汇总，降低冗余</li>
+<li><code>Mel spectrogram</code> 进一步贴近听觉感知</li>
+<li><code>MFCC</code> 用 DCT 提炼出更紧凑、更偏向谱包络的表示</li>
+</ol>
+<p>如果只想记住一句话：</p>
+<p><code>Mel 谱是在听觉尺度上看频谱，MFCC 是对 log-Mel 再做一次压缩，重点保留谱包络。</code></p>
+<h2 id="12">12. 参考与复现<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>本文相关文件位于当前目录：</p>
+<ul>
+<li><code>MFCC_visible.py</code></li>
+<li><code>generate_feature_figures.py</code></li>
+</ul>
+<p>运行下面的命令即可重新生成文中的图片：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>docs/speech/feature_extract/generate_feature_figures.py
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "navigation.tracking", "navigation.top", "navigation.tabs", "navigation.footer", "navigation.indexes"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      
+        <script src="https://cdn.tonycrane.cc/utils/katex.min.js"></script>
+      
+        <script src="../../../js/katex.js"></script>
+      
+    
+  </body>
+</html>
