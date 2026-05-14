@@ -122,4 +122,14 @@ nav:
       - 语法整理: japanese/aggregation/gramma.md
       - 日语整理: japanese/aggregation/japanese.md
       - 词汇整理: japanese/aggregation/word.md
+  - Speech:
+    - ASR技术发展:
+      - HMM-GMM 统计基石: speech/asr/01_hmm_gmm.md
+      - DNN-HMM 深度混合: speech/asr/02_dnn_hmm.md
+      - CTC 端到端训练: speech/asr/03_ctc.md
+      - RNN-T 流式识别: speech/asr/04_rnn_t.md
+      - Conformer 骨干网络: speech/asr/05_conformer.md
+      - 自监督语音预训练: speech/asr/06_self_supervised.md
+      - Whisper 弱监督大规模: speech/asr/07_whisper.md
+      - Qwen-Audio 语音大模型: speech/asr/08_qwen_audio.md
   - About: about.md

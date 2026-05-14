@@ -2,3 +2,6 @@ site/
 .vscode/
 .blog_env/
 .codegpt
+data/
+AGENT.md
+ref_data/
