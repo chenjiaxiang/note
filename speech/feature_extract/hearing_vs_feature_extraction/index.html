@@ -11,28 +11,28 @@
       
       
       
-        <link rel="prev" href="..">
+        <link rel="prev" href="../speech_feature_blog/">
       
       
-        <link rel="next" href="gramma/class_1/">
+        <link rel="next" href="../../asr/01_hmm_gmm/">
       
       
         
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
-        <title>Japanese 日语学习笔记 - jiaxiangchen的笔记本</title>
+        <title>人耳听觉与特征提取 - jiaxiangchen的笔记本</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -51,13 +51,13 @@
     
       <link rel="stylesheet" href="https://cdn.tonycrane.cc/lxgw/lxgwscreen.css">
     
-      <link rel="stylesheet" href="../css/custom.css">
+      <link rel="stylesheet" href="../../../css/custom.css">
     
-      <link rel="stylesheet" href="../css/card.css">
+      <link rel="stylesheet" href="../../../css/card.css">
     
-      <link rel="stylesheet" href="../css/toc_extra.css">
+      <link rel="stylesheet" href="../../../css/toc_extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -82,7 +82,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#japanese" class="md-skip">
+        <a href="#mel-mfcc" class="md-skip">
           跳转至
         </a>
       
@@ -96,7 +96,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href=".." title="jiaxiangchen的笔记本" class="md-header__button md-logo" aria-label="jiaxiangchen的笔记本" data-md-component="logo">
+    <a href="../../.." title="jiaxiangchen的笔记本" class="md-header__button md-logo" aria-label="jiaxiangchen的笔记本" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4zM3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm2-2v2h2V5zm0 14h2v-2H5zm0-6h2v-2H5z"/></svg>
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Japanese 日语学习笔记
+              人耳听觉与特征提取
             
           </span>
         </div>
@@ -203,7 +203,7 @@
     
     
       <li class="md-tabs__item">
-        <a href=".." class="md-tabs__link">
+        <a href="../../.." class="md-tabs__link">
           
   
   
@@ -221,13 +221,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../japanese/" class="md-tabs__link">
           
   
   
@@ -245,6 +243,8 @@
   
   
   
+    
+  
   
     
     
@@ -252,11 +252,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../speech/feature_extract/speech_feature_blog/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../speech_feature_blog/" class="md-tabs__link">
           
   
   
@@ -279,7 +281,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../about/" class="md-tabs__link">
+      <a href="../../../about/" class="md-tabs__link">
         
   
   
@@ -314,7 +316,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="jiaxiangchen的笔记本" class="md-nav__button md-logo" aria-label="jiaxiangchen的笔记本" data-md-component="logo">
+    <a href="../../.." title="jiaxiangchen的笔记本" class="md-nav__button md-logo" aria-label="jiaxiangchen的笔记本" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4zM3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm2-2v2h2V5zm0 14h2v-2H5zm0-6h2v-2H5z"/></svg>
@@ -353,7 +355,7 @@
         
           
           <div class="md-nav__link md-nav__container">
-            <a href=".." class="md-nav__link ">
+            <a href="../../.." class="md-nav__link ">
               
   
   
@@ -396,8 +398,6 @@
       
   
   
-    
-  
   
   
     
@@ -419,21 +419,18 @@
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="./" class="md-nav__link md-nav__link--active">
+            <a href="../../../japanese/" class="md-nav__link ">
               
   
   
@@ -451,13 +448,13 @@
             </a>
             
               
-              <label class="md-nav__link md-nav__link--active" for="__nav_2" id="__nav_2_label" tabindex="">
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
                 <span class="md-nav__icon md-icon"></span>
               </label>
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
@@ -609,7 +606,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_1/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_1/" class="md-nav__link">
         
   
   
@@ -637,7 +634,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_2/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_2/" class="md-nav__link">
         
   
   
@@ -665,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_3/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_3/" class="md-nav__link">
         
   
   
@@ -693,7 +690,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_4/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_4/" class="md-nav__link">
         
   
   
@@ -721,7 +718,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_5/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_5/" class="md-nav__link">
         
   
   
@@ -749,7 +746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_6/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_6/" class="md-nav__link">
         
   
   
@@ -777,7 +774,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_7/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_7/" class="md-nav__link">
         
   
   
@@ -805,7 +802,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_8/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_8/" class="md-nav__link">
         
   
   
@@ -833,7 +830,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_9/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_9/" class="md-nav__link">
         
   
   
@@ -861,7 +858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_10/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_10/" class="md-nav__link">
         
   
   
@@ -889,7 +886,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_11/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_11/" class="md-nav__link">
         
   
   
@@ -917,7 +914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_12/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_12/" class="md-nav__link">
         
   
   
@@ -945,7 +942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_13/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_13/" class="md-nav__link">
         
   
   
@@ -973,7 +970,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_14/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_14/" class="md-nav__link">
         
   
   
@@ -1001,7 +998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_15/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_15/" class="md-nav__link">
         
   
   
@@ -1029,7 +1026,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_16/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_16/" class="md-nav__link">
         
   
   
@@ -1057,7 +1054,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_17/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_17/" class="md-nav__link">
         
   
   
@@ -1085,7 +1082,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_18/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_18/" class="md-nav__link">
         
   
   
@@ -1113,7 +1110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_19/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_19/" class="md-nav__link">
         
   
   
@@ -1141,7 +1138,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_20/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_20/" class="md-nav__link">
         
   
   
@@ -1169,7 +1166,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_21/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_21/" class="md-nav__link">
         
   
   
@@ -1197,7 +1194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_22/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_22/" class="md-nav__link">
         
   
   
@@ -1225,7 +1222,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_23/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_23/" class="md-nav__link">
         
   
   
@@ -1253,7 +1250,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_24/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_24/" class="md-nav__link">
         
   
   
@@ -1281,7 +1278,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_25/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_25/" class="md-nav__link">
         
   
   
@@ -1309,7 +1306,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_26/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_26/" class="md-nav__link">
         
   
   
@@ -1337,7 +1334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_27/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_27/" class="md-nav__link">
         
   
   
@@ -1365,7 +1362,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_28/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_28/" class="md-nav__link">
         
   
   
@@ -1393,7 +1390,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_29/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_29/" class="md-nav__link">
         
   
   
@@ -1421,7 +1418,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_30/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_30/" class="md-nav__link">
         
   
   
@@ -1449,7 +1446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_31/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_31/" class="md-nav__link">
         
   
   
@@ -1477,7 +1474,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_32/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_32/" class="md-nav__link">
         
   
   
@@ -1505,7 +1502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_33/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_33/" class="md-nav__link">
         
   
   
@@ -1533,7 +1530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_33_supplement/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_33_supplement/" class="md-nav__link">
         
   
   
@@ -1561,7 +1558,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_34/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_34/" class="md-nav__link">
         
   
   
@@ -1589,7 +1586,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_35/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_35/" class="md-nav__link">
         
   
   
@@ -1617,7 +1614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_36/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_36/" class="md-nav__link">
         
   
   
@@ -1645,7 +1642,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_37/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_37/" class="md-nav__link">
         
   
   
@@ -1673,7 +1670,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/class_38/" class="md-nav__link">
+      <a href="../../../japanese/gramma/class_38/" class="md-nav__link">
         
   
   
@@ -1701,7 +1698,7 @@
   
   
     <li class="md-nav__item">
-      <a href="gramma/verb_transform_2/" class="md-nav__link">
+      <a href="../../../japanese/gramma/verb_transform_2/" class="md-nav__link">
         
   
   
@@ -1799,7 +1796,7 @@
   
   
     <li class="md-nav__item">
-      <a href="word/adjective/" class="md-nav__link">
+      <a href="../../../japanese/word/adjective/" class="md-nav__link">
         
   
   
@@ -1827,7 +1824,7 @@
   
   
     <li class="md-nav__item">
-      <a href="word/noun_transform/" class="md-nav__link">
+      <a href="../../../japanese/word/noun_transform/" class="md-nav__link">
         
   
   
@@ -1855,7 +1852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="word/position/" class="md-nav__link">
+      <a href="../../../japanese/word/position/" class="md-nav__link">
         
   
   
@@ -1883,7 +1880,7 @@
   
   
     <li class="md-nav__item">
-      <a href="word/verb_transform/" class="md-nav__link">
+      <a href="../../../japanese/word/verb_transform/" class="md-nav__link">
         
   
   
@@ -1911,7 +1908,7 @@
   
   
     <li class="md-nav__item">
-      <a href="word/week/" class="md-nav__link">
+      <a href="../../../japanese/word/week/" class="md-nav__link">
         
   
   
@@ -2001,7 +1998,7 @@
   
   
     <li class="md-nav__item">
-      <a href="supplement/ask/" class="md-nav__link">
+      <a href="../../../japanese/supplement/ask/" class="md-nav__link">
         
   
   
@@ -2095,7 +2092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="aggregation/gramma/" class="md-nav__link">
+      <a href="../../../japanese/aggregation/gramma/" class="md-nav__link">
         
   
   
@@ -2123,7 +2120,7 @@
   
   
     <li class="md-nav__item">
-      <a href="aggregation/japanese/" class="md-nav__link">
+      <a href="../../../japanese/aggregation/japanese/" class="md-nav__link">
         
   
   
@@ -2151,7 +2148,7 @@
   
   
     <li class="md-nav__item">
-      <a href="aggregation/word/" class="md-nav__link">
+      <a href="../../../japanese/aggregation/word/" class="md-nav__link">
         
   
   
@@ -2191,8 +2188,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -2204,17 +2203,20 @@
     
     
       
+        
+        
+      
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -2232,7 +2234,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2247,8 +2249,10 @@
                 
   
   
+    
   
   
+  
     
     
       
@@ -2263,11 +2267,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
         
           
           <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
@@ -2288,7 +2292,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -2306,7 +2310,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/feature_extract/speech_feature_blog/" class="md-nav__link">
+      <a href="../speech_feature_blog/" class="md-nav__link">
         
   
   
@@ -2331,10 +2335,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../speech/feature_extract/hearing_vs_feature_extraction/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    人耳听觉与特征提取
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -2350,6 +2381,136 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 人耳不是在看波形，而是在分析频率
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 为什么要分帧：人耳也是连续地看短时间变化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-filter-bank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 耳蜗像一组滤波器，filter bank 也是一组滤波器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-mel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 为什么是 Mel 尺度：人耳对频率的感知不是线性的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 为什么要取 log：响度感知也不是线性的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mfcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. MFCC：把听觉频带能量进一步压缩成谱包络
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 一张对照表：人耳做了什么，算法做了什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 但机器并不等于人耳
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 参考
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2438,7 +2599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/asr/01_hmm_gmm/" class="md-nav__link">
+      <a href="../../asr/01_hmm_gmm/" class="md-nav__link">
         
   
   
@@ -2466,7 +2627,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/asr/02_dnn_hmm/" class="md-nav__link">
+      <a href="../../asr/02_dnn_hmm/" class="md-nav__link">
         
   
   
@@ -2494,7 +2655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/asr/03_ctc/" class="md-nav__link">
+      <a href="../../asr/03_ctc/" class="md-nav__link">
         
   
   
@@ -2522,7 +2683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/asr/04_rnn_t/" class="md-nav__link">
+      <a href="../../asr/04_rnn_t/" class="md-nav__link">
         
   
   
@@ -2550,7 +2711,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/asr/05_conformer/" class="md-nav__link">
+      <a href="../../asr/05_conformer/" class="md-nav__link">
         
   
   
@@ -2578,7 +2739,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/asr/06_self_supervised/" class="md-nav__link">
+      <a href="../../asr/06_self_supervised/" class="md-nav__link">
         
   
   
@@ -2606,7 +2767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/asr/07_whisper/" class="md-nav__link">
+      <a href="../../asr/07_whisper/" class="md-nav__link">
         
   
   
@@ -2634,7 +2795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../speech/asr/08_qwen_audio/" class="md-nav__link">
+      <a href="../../asr/08_qwen_audio/" class="md-nav__link">
         
   
   
@@ -2677,7 +2838,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../about/" class="md-nav__link">
+      <a href="../../../about/" class="md-nav__link">
         
   
   
@@ -2724,10 +2885,109 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#table-of-contents" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Table of Contents
+        1. 人耳不是在看波形，而是在分析频率
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 为什么要分帧：人耳也是连续地看短时间变化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-filter-bank" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 耳蜗像一组滤波器，filter bank 也是一组滤波器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-mel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 为什么是 Mel 尺度：人耳对频率的感知不是线性的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 为什么要取 log：响度感知也不是线性的
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-mfcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. MFCC：把听觉频带能量进一步压缩成谱包络
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 一张对照表：人耳做了什么，算法做了什么
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 但机器并不等于人耳
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 总结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 参考
       
     </span>
   </a>
@@ -2751,222 +3011,158 @@
 
 
 
-<h1 id="japanese">Japanese 日语学习笔记<a class="headerlink" href="#japanese" title="Permanent link">&para;</a></h1>
-<div class="admonition abstract">
-<p class="admonition-title">简介</p>
-<p>这里是日语学习相关的笔记</p>
-<p>包含语法笔记、词汇整理和综合练习</p>
-</div>
-<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
-<div class="index-item-wrapper">
-<div class="title-wrapper">语法笔记</div>
-<ul class="content-item-wrapper">
-  <li>
-    <div class="item-primary"><a href="gramma/class_1/">第1课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_2/">第2课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_3/">第3课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_4/">第4课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_5/">第5课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_6/">第6课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_7/">第7课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_8/">第8课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_9/">第9课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_10/">第10课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_11/">第11课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_12/">第12课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_13/">第13课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_14/">第14课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_15/">第15课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_16/">第16课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_17/">第17课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_18/">第18课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_19/">第19课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_20/">第20课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_21/">第21课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_22/">第22课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_23/">第23课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_24/">第24课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_25/">第25课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_26/">第26课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_27/">第27课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_28/">第28课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_29/">第29课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_30/">第30课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_31/">第31课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_32/">第32课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_33/">第33课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_33_supplement/">第33课补充</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_34/">第34课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_35/">第35课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_36/">第36课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_37/">第37课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/class_38/">第38课</a></div>
-    <div class="item-metadata"><span class="note-tag">课程笔记</span></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="gramma/verb_transform_2/">动词变形2</a></div>
-    <div class="item-metadata"></div>
-  </li>
+<h1 id="mel-mfcc">从人耳听语音到机器提取特征：为什么 Mel 谱和 MFCC 会有效<a class="headerlink" href="#mel-mfcc" title="Permanent link">&para;</a></h1>
+<p>语音特征提取最容易被理解成一串工程步骤：</p>
+<p><code>分帧 -&gt; 加窗 -&gt; FFT -&gt; Mel filter bank -&gt; log -&gt; DCT</code></p>
+<p>但如果只记流程，很容易不知道每一步到底在“保留什么信息”。更好的理解方式是把它和人耳听语音的过程放在一起看。</p>
+<p>人耳并不是逐点读取空气压力波形。我们真正感受到的是声音里不同频率成分的强弱、这些成分随时间如何变化，以及声道共振带来的整体频谱形状。语音识别里的特征提取也在做类似的事：它不直接把原始波形丢给模型，而是把声音整理成更接近听觉感知、也更适合建模的表示。</p>
+<p><img alt="人耳听觉与机器特征提取的整体对照" src="../images/hearing_vs_machine_overview.png" /></p>
+<p>这篇文章的重点不是说机器“完全模拟”了人耳，而是用人耳作为参照，理解为什么 <code>Mel spectrogram</code>、<code>filter bank</code> 和 <code>MFCC</code> 这些特征在语音任务里长期有效。</p>
+<h2 id="1">1. 人耳不是在看波形，而是在分析频率<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>麦克风采到的语音是一条随时间起伏的波形。它包含了很多信息，但对识别来说并不直观。</p>
+<p>例如同一句话，换一个说话人、换一个麦克风、音量稍微变大或变小，波形采样点都会明显变化。可是人耳仍然能听出它是同一句话。说明我们听语音时，并不是依赖每个采样点的精确数值。</p>
+<p>更关键的信息通常在频率结构里：</p>
+<ul>
+<li>哪些频率能量强，哪些频率能量弱</li>
+<li>这些频率能量在短时间内如何变化</li>
+<li>元音的共振峰大致落在哪里</li>
+<li>清辅音、擦音、爆破音是否带来高频或瞬态变化</li>
 </ul>
-</div>
-
-<div class="index-item-wrapper">
-<div class="title-wrapper">词汇</div>
-<ul class="content-item-wrapper">
-  <li>
-    <div class="item-primary"><a href="word/adjective/">形容词</a></div>
-    <div class="item-metadata"></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="word/noun_transform/">名词转换</a></div>
-    <div class="item-metadata"></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="word/position/">位置词</a></div>
-    <div class="item-metadata"></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="word/verb_transform/">动词变形</a></div>
-    <div class="item-metadata"></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="word/week/">星期</a></div>
-    <div class="item-metadata"></div>
-  </li>
+<p>所以语音特征提取的第一层思想就是：不要只看波形本身，要把声音拆成频率成分来看。</p>
+<p>这对应到机器处理，就是 <code>FFT</code> 或 <code>STFT</code>。</p>
+<h2 id="2">2. 为什么要分帧：人耳也是连续地看短时间变化<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>语音不是静止信号。一个音节内部会变化，一个词和下一个词之间也会变化。如果对整段语音只做一次频谱分析，时间上的变化会被混在一起。</p>
+<p>但在很短的时间内，比如 <code>20ms ~ 30ms</code>，语音可以近似看成稳定的。于是工程上会把音频切成短帧：</p>
+<ul>
+<li>常见帧长：<code>25ms</code></li>
+<li>常见帧移：<code>10ms</code></li>
+<li>每帧乘窗函数，降低边界截断带来的频谱泄漏</li>
 </ul>
-</div>
-
-<div class="index-item-wrapper">
-<div class="title-wrapper">综合整理</div>
-<ul class="content-item-wrapper">
-  <li>
-    <div class="item-primary"><a href="aggregation/gramma/">语法整理</a></div>
-    <div class="item-metadata"></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="aggregation/japanese/">日语整理</a></div>
-    <div class="item-metadata"></div>
-  </li>
-  <li>
-    <div class="item-primary"><a href="aggregation/word/">词汇整理</a></div>
-    <div class="item-metadata"></div>
-  </li>
+<p>这一步和听觉直觉很一致：我们不是等一句话结束后才一次性理解声音，而是在连续接收一个个短时间片段，并把这些片段串起来形成语音感知。</p>
+<p>已有文章中的这张图展示了波形如何被切成短帧并加窗。</p>
+<p><img alt="波形与分帧加窗" src="../images/waveform_and_frame.png" /></p>
+<p>分帧之后，每一帧都可以做频谱分析。把很多帧的频谱按时间排列起来，就得到频谱图。</p>
+<h2 id="3-filter-bank">3. 耳蜗像一组滤波器，filter bank 也是一组滤波器<a class="headerlink" href="#3-filter-bank" title="Permanent link">&para;</a></h2>
+<p>人耳里最重要的结构之一是耳蜗。可以粗略理解为：耳蜗的不同位置对不同频率更敏感。低频和高频不会被完全等价地处理，而是会在听觉系统中形成一种频率分解。</p>
+<p>这和 <code>filter bank</code> 的思想很像。</p>
+<p><code>filter bank</code> 是一组带通滤波器。每个滤波器负责统计一个频率范围内的能量：</p>
+<div class="arithmatex">\[
+E_m = \sum_k P[k] H_m[k]
+\]</div>
+<p>其中 <span class="arithmatex">\(P[k]\)</span> 是功率谱，第 <span class="arithmatex">\(m\)</span> 个滤波器是 <span class="arithmatex">\(H_m[k]\)</span>，输出 <span class="arithmatex">\(E_m\)</span> 就是这一段频带的能量。</p>
+<p><img alt="耳蜗分频与 Mel filter bank 的类比" src="../images/cochlea_filterbank_analogy.png" /></p>
+<p>这一步做了两件事：</p>
+<ol>
+<li>把 FFT 中很细的频率点汇总成更稳定的频带能量。</li>
+<li>让特征更关注“频带整体强弱”，而不是每一根细小谐波的位置。</li>
+</ol>
+<p>这对语音很重要。因为同一个元音由不同人说出来，基频和谐波位置会变，但声道形成的谱包络相对更稳定。filter bank 汇总频带能量后，能更好地保留这种稳定结构。</p>
+<h2 id="4-mel">4. 为什么是 Mel 尺度：人耳对频率的感知不是线性的<a class="headerlink" href="#4-mel" title="Permanent link">&para;</a></h2>
+<p>如果频率从 <code>300Hz</code> 增加到 <code>600Hz</code>，人耳会觉得变化很明显。但如果从 <code>5300Hz</code> 增加到 <code>5600Hz</code>，虽然同样增加了 <code>300Hz</code>，主观感受并不一样。</p>
+<p>这说明人耳对频率的分辨率不是线性的。低频区域通常分得更细，高频区域相对更粗。</p>
+<p>Mel 尺度就是为了近似这种听觉特性。常见公式是：</p>
+<div class="arithmatex">\[
+\text{mel}(f) = 2595 \log_{10}\left(1 + \frac{f}{700}\right)
+\]</div>
+<p>它带来的结果是：</p>
+<ul>
+<li>低频滤波器更密</li>
+<li>高频滤波器更疏</li>
+<li>特征的频率轴更接近听觉感知</li>
 </ul>
-</div>
+<p>因此，<code>Mel filter bank</code> 不是随便设计的一组滤波器。它背后的直觉是：既然人耳不是线性地感知频率，机器也没有必要在线性 Hz 轴上平均地分配注意力。</p>
+<h2 id="5-log">5. 为什么要取 log：响度感知也不是线性的<a class="headerlink" href="#5-log" title="Permanent link">&para;</a></h2>
+<p>人耳对响度的感知同样不是线性的。声音能量翻倍，不等于主观上“听起来也翻倍”。</p>
+<p>所以在 Mel filter bank 得到每个频带的能量之后，通常会取对数：</p>
+<p><code>Mel energy -&gt; log-Mel</code></p>
+<p>取 log 有三个好处：</p>
+<ul>
+<li>压缩动态范围，避免大能量频带完全主导特征</li>
+<li>更接近人耳对响度的非线性感知</li>
+<li>把一些乘性影响转成加性影响，后续建模更方便</li>
+</ul>
+<p>把每一帧的 <code>log-Mel</code> 沿时间拼起来，就是常说的 <code>Mel spectrogram</code>。</p>
+<p>已有技术图里可以看到，从线性 STFT 到 Mel 谱，再到 MFCC，信息表示在逐步抽象。</p>
+<p><img alt="STFT、Mel 谱与 MFCC 总览" src="../images/stft_mel_mfcc_overview.png" /></p>
+<h2 id="6-mfcc">6. MFCC：把听觉频带能量进一步压缩成谱包络<a class="headerlink" href="#6-mfcc" title="Permanent link">&para;</a></h2>
+<p>MFCC 比 <code>log-Mel</code> 多做了一步 <code>DCT</code>：</p>
+<div class="arithmatex">\[
+\text{MFCC} = \text{DCT}(\log\text{-Mel})
+\]</div>
+<p>如果说 <code>log-Mel</code> 是“按听觉尺度整理后的频带能量”，那么 MFCC 更像是在这个基础上继续提炼出整体形状。</p>
+<p>低阶 MFCC 通常对应变化较慢的部分，也就是频谱包络；高阶 MFCC 更容易包含快速起伏的细节，比如谐波造成的局部波动。传统语音系统常保留前 <code>12</code> 或 <code>13</code> 维 MFCC，就是因为很多语音识别所需的稳定信息集中在低阶部分。</p>
+<p>这张图展示了只保留不同数量的低阶 MFCC 后，重建出来的 log-Mel 形状。保留维度越少，越像是在抓平滑的整体外形。</p>
+<p><img alt="MFCC 重建 log-Mel" src="../images/mfcc_reconstruction.png" /></p>
+<p>从听觉类比看，MFCC 做的不是“听得更细”，而是把对识别更稳定的谱包络压缩出来。</p>
+<h2 id="7">7. 一张对照表：人耳做了什么，算法做了什么<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>人耳/听觉系统关注点</th>
+<th>特征提取中的对应步骤</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>连续感知短时间变化</td>
+<td>分帧、帧移</td>
+<td>把非平稳语音拆成短时近似稳定片段</td>
+</tr>
+<tr>
+<td>对频率成分敏感</td>
+<td>FFT / STFT</td>
+<td>从波形转到频率表示</td>
+</tr>
+<tr>
+<td>耳蜗不同位置响应不同频率</td>
+<td>filter bank</td>
+<td>汇总不同频带的能量</td>
+</tr>
+<tr>
+<td>低频分辨率更细，高频更粗</td>
+<td>Mel 尺度</td>
+<td>让频率轴更接近听觉感知</td>
+</tr>
+<tr>
+<td>响度感知非线性</td>
+<td>log 压缩</td>
+<td>压缩动态范围，突出相对变化</td>
+</tr>
+<tr>
+<td>更关注稳定的音色和共振结构</td>
+<td>MFCC 低阶系数</td>
+<td>提炼谱包络，弱化部分细碎波动</td>
+</tr>
+</tbody>
+</table>
+<p>这张表可以帮助记住整个流程：</p>
+<p><code>波形 -&gt; 短时频谱 -&gt; Mel 频带能量 -&gt; log-Mel -&gt; MFCC</code></p>
+<p>它不是一串孤立步骤，而是在逐步把声音变成更接近“听觉上有意义”的表示。</p>
+<p><img alt="从波形到语音特征的处理链路" src="../images/waveform_to_features_pipeline.png" /></p>
+<h2 id="8">8. 但机器并不等于人耳<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>用人耳做类比很有帮助，但也要避免过度理解。</p>
+<p><code>Mel spectrogram</code> 和 <code>MFCC</code> 只是借鉴了听觉系统的一些规律，例如频率非线性和响度非线性。它们并没有完整模拟耳蜗、听神经、大脑皮层，也不会自动理解音素、词义或上下文。</p>
+<p>现代端到端 ASR 里，模型也经常直接使用 <code>log-Mel</code> 或 <code>fbank</code>，让神经网络自己学习后续变换，而不一定再手工做 DCT 得到 MFCC。即便如此，Mel 频带和 log 压缩仍然很常见，因为它们提供了一个稳定、紧凑、符合听觉直觉的输入表示。</p>
+<p>所以更准确的说法是：</p>
+<blockquote>
+<p>语音特征提取不是复制人耳，而是把人耳有效利用的信息，用工程上稳定可计算的方式表达出来。</p>
+</blockquote>
+<h2 id="9">9. 总结<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<p>如果只看原始波形，语音是一串高速变化的采样点；如果从听觉角度看，语音更像是一组随时间变化的频率能量结构。</p>
+<p>这正是音频特征提取的核心：</p>
+<ol>
+<li><code>分帧</code>：跟踪短时间变化。</li>
+<li><code>FFT/STFT</code>：把波形拆成频率成分。</li>
+<li><code>Mel filter bank</code>：像耳蜗一样按频带汇总能量。</li>
+<li><code>log</code>：模拟响度感知并压缩动态范围。</li>
+<li><code>MFCC</code>：进一步提炼稳定的谱包络。</li>
+</ol>
+<p>如果只记一句话：</p>
+<p><code>Mel 谱是在听觉尺度上整理频谱，MFCC 是在 Mel 谱上进一步压缩出谱包络。</code></p>
+<p>理解了这层对比，<code>STFT -&gt; Mel -&gt; MFCC</code> 就不再是一串公式，而是一套把声音变成可识别信息的过程。</p>
+<h2 id="10">10. 参考<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>本文的写作角度受到 Jonathan Hui 的文章 <a href="https://jonathan-hui.medium.com/speech-recognition-phonetics-d761ea1710c0">Speech Recognition: Phonetics</a> 启发，重点提炼其中“听觉感知与语音特征提取之间的关系”，并结合当前笔记中的 MFCC、Mel spectrogram 和 filter bank 内容重新组织。</p>
 
 
 
@@ -3002,7 +3198,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href=".." class="md-footer__link md-footer__link--prev" aria-label="上一页: jiaxiangchen的笔记本">
+          <a href="../speech_feature_blog/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 从人发声到 MFCC">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3012,20 +3208,20 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                jiaxiangchen的笔记本
+                从人发声到 MFCC
               </div>
             </div>
           </a>
         
         
           
-          <a href="gramma/class_1/" class="md-footer__link md-footer__link--next" aria-label="下一页: 第1课">
+          <a href="../../asr/01_hmm_gmm/" class="md-footer__link md-footer__link--next" aria-label="下一页: HMM-GMM 统计基石">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                第1课
+                HMM-GMM 统计基石
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3062,14 +3258,14 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["content.code.annotate", "navigation.tracking", "navigation.top", "navigation.tabs", "navigation.footer", "navigation.indexes"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.annotate", "navigation.tracking", "navigation.top", "navigation.tabs", "navigation.footer", "navigation.indexes"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
       
         <script src="https://cdn.tonycrane.cc/utils/katex.min.js"></script>
       
-        <script src="../js/katex.js"></script>
+        <script src="../../../js/katex.js"></script>
       
     
   </body>
