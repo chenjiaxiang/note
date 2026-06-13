@@ -1,6 +1,7 @@
 site/
 .vscode/
 .blog_env/
+blog_env/
 .codegpt
 data/
 AGENT.md
