@@ -11,4 +11,9 @@ CTC全称Connectionist Temporal Classification。
 1. 先合并相同phone
 2. 去除blank  
 举例：
-aap$\xi$ppp$\xi$le
+aap $\xi$ ppp $\xi$ le -> ap $\xi$ p $\xi$ le -> apple 
+
+基于上述的压缩规则，可以有多个CTC序列对应压缩后的序列。对模型的训练来说，所有的压缩后于ground truth序列相同的序列都应该是合法序列。  
+但是所有的合法序列要显式都找出来计算量太大，是$O(N^T)$的指数复杂度，是不可接受的。所以借鉴HMM的前后向过程，用动态规划来求解。  
+这里需要注意，我们不再关注每个时刻的监督信号，因为本身就不存在，不同合法序列在每个时刻对应的phone可能都是不同的。我们只求所有合法序列的概率和。  
+<span style="color: red;">加图</span>  
