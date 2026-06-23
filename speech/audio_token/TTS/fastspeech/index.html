@@ -2898,10 +2898,10 @@
 2. 修改space的倍数实现韵律的控制</p>
 <h2 id="_5">图示<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <h3 id="_6">整体结构<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
-<p><img src="../image/TTS/fastspeech/overall.png" alt="overall" width="800"/>  </br>
+<p><img src="../../image/TTS/fastspeech/overall.png" alt="overall" width="800"/>  </br>
 还对自回归TTS的sequence-level knowledge进行蒸馏。（蒸馏的目标是梅尔谱），其实没太理解这里的梅尔谱和直接抽取的有什么区别？对应的<a href="https://arxiv.org/abs/1606.07947">论文</a></p>
 <h3 id="fft-block">FFT block<a class="headerlink" href="#fft-block" title="Permanent link">&para;</a></h3>
-<p><img src="../image/TTS/fastspeech/fft.png" alt="fft" width="800"/></p>
+<p><img src="../../image/TTS/fastspeech/fft.png" alt="fft" width="800"/></p>
 <h3 id="length-regulator">length regulator<a class="headerlink" href="#length-regulator" title="Permanent link">&para;</a></h3>
 <video controls width="1080">
     <source src="https://pub-0041adf75d3e4d7d9a5dce556e21001c.r2.dev/audio-token-video/Length_regulator.mp4" type="video/mp4">
@@ -2909,7 +2909,7 @@
 </video>
 
 <h3 id="duration-predictor">duration predictor<a class="headerlink" href="#duration-predictor" title="Permanent link">&para;</a></h3>
-<p><img src="../image/TTS/fastspeech/duration_predictor.png" alt="dp" width="800"/>  </br>
+<p><img src="../../image/TTS/fastspeech/duration_predictor.png" alt="dp" width="800"/>  </br>
 先训练一个TTS的自回归模型，使用transfromer模型(multihead attention). 然后在各个attention矩阵上衡量与对角阵（非方阵）的相似度（叫对角度更合适）。选择对角度最大的attention，进行变形argmax后得到duration predictor的监督信息。</p>
 <h2 id="_7">实验结果<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p>评测维度设置为语音质量，推理速度，鲁棒性（对重复和遗漏的解决），可控性。</p>
