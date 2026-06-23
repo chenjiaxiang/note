@@ -1,5 +1,5 @@
-site_name: jiaxiangchen的笔记本
-site_description: jiaxiangchen的个人笔记本
+site_name: jiaxiangchen的blog
+site_description: jiaxiangchen的个人blog
 
 theme:
   name: 'material'
@@ -127,12 +127,27 @@ nav:
       - 从人发声到 MFCC: speech/feature_extract/speech_feature_blog.md
       - 人耳听觉与特征提取: speech/feature_extract/hearing_vs_feature_extraction.md
     - ASR技术发展:
-      - HMM-GMM 统计基石: speech/asr/01_hmm_gmm.md
-      - DNN-HMM 深度混合: speech/asr/02_dnn_hmm.md
-      - CTC 端到端训练: speech/asr/03_ctc.md
-      - RNN-T 流式识别: speech/asr/04_rnn_t.md
+      - HMM 传统算法: speech/asr_jxchen/01_hmm.md
+      - LAS : speech/asr_jxchen/03_LAS.md
+      - CTC 端到端训练推理: speech/asr_jxchen/02_ctc.md
+      - RNN-T 端到端训练推理: speech/asr_jxchen/04_Transducer.md
       - Conformer 骨干网络: speech/asr/05_conformer.md
       - 自监督语音预训练: speech/asr/06_self_supervised.md
       - Whisper 弱监督大规模: speech/asr/07_whisper.md
       - Qwen-Audio 语音大模型: speech/asr/08_qwen_audio.md
+    - 双工语音交互系统:
+      - MOSHI: speech/audio_token/moshi.md
+    - 语音token编码技术:
+      - 离散和连续token编码对比: speech/audio_token/tokenizer/discrete_continous_token_compare.md
+      - 高保真压缩技术: speech/audio_token/tokenizer/HiFI_Fidelity_Neural_Audio_Compression.md
+      - 自监督表征学习: speech/audio_token/tokenizer/Self-supervised_speech_representation_Learning_Review.md
+      - SoundStream: speech/audio_token/tokenizer/SoundStream.md
+      - USLM: speech/audio_token/tokenizer/SpeechTokenizer_USLM.md
+    - LLMASR:
+      - 语音和LLM的结合: speech/audio_token/llmasr/effecitive_text_adaption_for_llm_based_asr.md
+  - 计算加速:
+    - 量化:
+      - 量化综述: compute_accelerate/quantization/quantization.md
+    - 并行计算:
+      - 并行计算综述: compute_accelerate/parallel/parallel.md
   - About: about.md
