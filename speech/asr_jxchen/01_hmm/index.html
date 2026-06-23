@@ -1,0 +1,3147 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="jiaxiangchen的个人blog">
+      
+      
+      
+      
+        <link rel="prev" href="../../feature_extract/hearing_vs_feature_extraction/">
+      
+      
+        <link rel="next" href="../03_LAS/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.36">
+    
+    
+      
+        <title>HMM 传统算法 - jiaxiangchen的blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.06209087.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/utils/katex.min.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/jbmono/jetbrainsmono.css">
+    
+      <link rel="stylesheet" href="https://cdn.tonycrane.cc/lxgw/lxgwscreen.css">
+    
+      <link rel="stylesheet" href="../../../css/custom.css">
+    
+      <link rel="stylesheet" href="../../../css/card.css">
+    
+      <link rel="stylesheet" href="../../../css/toc_extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#hmm" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../.." title="jiaxiangchen的blog" class="md-header__button md-logo" aria-label="jiaxiangchen的blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4zM3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm2-2v2h2V5zm0 14h2v-2H5zm0-6h2v-2H5z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            jiaxiangchen的blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              HMM 传统算法
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+    
+  
+  Home
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../japanese/" class="md-tabs__link">
+          
+  
+    
+  
+  Japanese
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../feature_extract/speech_feature_blog/" class="md-tabs__link">
+          
+  
+    
+  
+  Speech
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../computer_accerlate/quantization/quantization/" class="md-tabs__link">
+          
+  
+    
+  
+  计算加速
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../about/" class="md-tabs__link">
+        
+  
+    
+  
+  About
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="jiaxiangchen的blog" class="md-nav__button md-logo" aria-label="jiaxiangchen的blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 4v6l-2-2-2 2V4H9v16h10V4zM3 7V5h2V4a2 2 0 0 1 2-2h12c1.05 0 2 .95 2 2v16c0 1.05-.95 2-2 2H7c-1.05 0-2-.95-2-2v-1H3v-2h2v-4H3v-2h2V7zm2-2v2h2V5zm0 14h2v-2H5zm0-6h2v-2H5z"/></svg>
+
+    </a>
+    jiaxiangchen的blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../japanese/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Japanese
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Japanese
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    语法笔记
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            语法笔记
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_1/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第1课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第2课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第3课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第4课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_5/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第5课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第6课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_7/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第7课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第8课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_9/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第9课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第10课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第11课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第12课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_13/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第13课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_14/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第14课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_15/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第15课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_16/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第16课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_17/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第17课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_18/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第18课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_19/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第19课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_20/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第20课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_21/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第21课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_22/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第22课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_23/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第23课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_24/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第24课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_25/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第25课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_26/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第26课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_27/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第27课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_28/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第28课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_29/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第29课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_30/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第30课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_31/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第31课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_32/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第32课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_33/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第33课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_33_supplement/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第33课补充
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_34/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第34课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_35/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第35课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_36/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第36课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_37/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第37课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/class_38/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    第38课
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/gramma/verb_transform_2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    动词变形2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    词汇
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            词汇
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/adjective/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    形容词
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/noun_transform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    名词转换
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/position/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    位置词
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/verb_transform/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    动词变形
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/word/week/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    星期
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    补充
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            补充
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/supplement/ask/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    疑问表达
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    综合整理
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            综合整理
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/aggregation/gramma/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    语法整理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/aggregation/japanese/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    日语整理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../japanese/aggregation/word/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    词汇整理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Speech
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Speech
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    语音特征提取
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            语音特征提取
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feature_extract/speech_feature_blog/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    从人发声到 MFCC
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../feature_extract/hearing_vs_feature_extraction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    人耳听觉与特征提取
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ASR技术发展
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            ASR技术发展
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    HMM 传统算法
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    HMM 传统算法
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#markov-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Markov Chain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hidden" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hidden
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hmm_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      HMM的学习过程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HMM的学习过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      辅助变量的定义和计算过程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmm_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基于辅助变量的HMM参数学习过程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      解码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="解码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      逐帧的贪心解码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viterbi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Viterbi解码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#beam-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Beam Search
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03_LAS/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LAS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02_ctc/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CTC 端到端训练推理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04_Transducer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    RNN-T 端到端训练推理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/05_conformer/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conformer 骨干网络
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/06_self_supervised/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    自监督语音预训练
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/07_whisper/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Whisper 弱监督大规模
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../asr/08_qwen_audio/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Qwen-Audio 语音大模型
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    双工语音交互系统
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            双工语音交互系统
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio_token/moshi/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    MOSHI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    语音token编码技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            语音token编码技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio_token/tokenizer/discrete_continous_token_compare/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    离散和连续token编码对比
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio_token/tokenizer/HiFI_Fidelity_Neural_Audio_Compression/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    高保真压缩技术
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio_token/tokenizer/Self-supervised_speech_representation_Learning_Review/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    自监督表征学习
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio_token/tokenizer/SoundStream/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SoundStream
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio_token/tokenizer/SpeechTokenizer_USLM/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    USLM
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    LLMASR
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            LLMASR
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../audio_token/llmasr/effecitive_text_adaption_for_llm_based_asr/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    语音和LLM的结合
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    计算加速
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            计算加速
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    量化
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_1">
+            <span class="md-nav__icon md-icon"></span>
+            量化
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computer_accerlate/quantization/quantization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    量化综述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    并行计算
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            并行计算
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../computer_accerlate/parallel/parallel/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    并行计算综述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    About
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#markov-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      Markov Chain
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hidden" class="md-nav__link">
+    <span class="md-ellipsis">
+      Hidden
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hmm_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      HMM的学习过程
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="HMM的学习过程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      辅助变量的定义和计算过程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hmm_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      基于辅助变量的HMM参数学习过程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      解码
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="解码">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      逐帧的贪心解码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#viterbi" class="md-nav__link">
+    <span class="md-ellipsis">
+      Viterbi解码
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#beam-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      Beam Search
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="hmm">HMM的含义以及在语音识别中的应用<a class="headerlink" href="#hmm" title="Permanent link">&para;</a></h1>
+<p>HMM全称为Hidden Markov Model，其中markov部分是描述有依赖关系的离散随机过程的，称为markov chain。</p>
+<h2 id="markov-chain">Markov Chain<a class="headerlink" href="#markov-chain" title="Permanent link">&para;</a></h2>
+<p>依赖关系为一个节点只依赖前置节点，依赖的数量称为阶，例如<span class="arithmatex">\(S_{t+1}\)</span>只依赖<span class="arithmatex">\(s_{t}\)</span>，则称为1阶markov  chain。概率描述为：<span class="arithmatex">\(P(S_{t+1}​=x∣S_t​,S_{t−1}​,…,S_1​)=P(S_{t+1}=s∣S_t​)\)</span>，其中<span class="arithmatex">\(t\)</span>是时间步，<span class="arithmatex">\(S_{t}\)</span>是在时刻<span class="arithmatex">\(t\)</span>的随机变量，s是随机变量的取值。</p>
+<p><img src="./picture/hmm.png" width="500" alt="hmm">  </p>
+<p>描述一个1阶markov chain，需要的信息是转移概率：在一个状态下转移到另一个状态的概率。公式描述：<span class="arithmatex">\(p_{ij}​=P(S_{t+1​}=j∣S_t​=i)\)</span>，当有n个离散状态时，所有状态之间的转移矩阵如下：
+$$
+P = \begin{pmatrix}
+p_{11} &amp; p_{12} &amp; \cdots &amp; p_{1n} \
+p_{21} &amp; p_{22} &amp; \cdots &amp; p_{2n} \
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \
+p_{n1} &amp; p_{n2} &amp; \cdots &amp; p_{nn}
+\end{pmatrix}
+$$
+当这个转移概率矩阵的所有值都知道的情况下，这个markov chain就确定了。(转移概率和时间无关的特性叫做时间齐次性。)
+随机过程中确定markov chain的方式一般是统计，其中<span class="arithmatex">\(N_{ij}\)</span>表示从状态<span class="arithmatex">\(i\)</span>转移到状态<span class="arithmatex">\(j\)</span>的次数。
+<span class="arithmatex">\(<span class="arithmatex">\(\hat{p}_{ij} = \frac{N_{ij}}{\sum_{k} N_{ik}} = \frac{N_{ij}}{N_i}\)</span>\)</span></p>
+<h2 id="hidden">Hidden<a class="headerlink" href="#hidden" title="Permanent link">&para;</a></h2>
+<p>接下来讨论hidden的含义，隐指的是刚才描述的<span class="arithmatex">\(S_i\)</span>是无法直接观察的，可以观察的状态用<span class="arithmatex">\(O_i\)</span>表示。<span class="arithmatex">\(O_i\)</span>是<span class="arithmatex">\(S_i\)</span>的条件随机变量。公式表达<span class="arithmatex">\(b_j(k) = P(O_t = k \mid S_t = j)\)</span>，这个概率称为发射概率，发射概率矩阵如下：
+$$
+B = \begin{pmatrix}
+b_1(1) &amp; b_1(2) &amp; \cdots &amp; b_1(M) \
+b_2(1) &amp; b_2(2) &amp; \cdots &amp; b_2(M) \
+\vdots &amp; \vdots  &amp; \ddots &amp; \vdots  \
+b_N(1) &amp; b_N(2) &amp; \cdots &amp; b_N(M)
+\end{pmatrix}
+$$
+与Markov Chain的确定一样，当发射概率矩阵的所有值都知道，发射过程也就确定了。发射概率的确定一般也是基于统计：
+<span class="arithmatex">\(<span class="arithmatex">\(\hat{b}_j(k) = \frac{\sum_{t=1}^{T} \mathbf{1}[S_t = j,\ O_t = k]}
+                    {\sum_{t=1}^{T} \mathbf{1}[S_t = j]}\)</span>\)</span></p>
+<div class="admonition note">
+<p class="admonition-title">为什么会有Hidden Markov Model</p>
+<p>在实际应用中，我们希望了解的过程中的重要变量很多的确是无法观察的。例如人的情绪，取值定为(高兴，悲伤，愤怒)。我们想要知道一个人的情绪，往往是从行为推断的，行为空间定为(看电影，睡觉，唱歌)。在不同的情绪下发生不同行为的概率不同。当我们对人的情绪感兴趣，需要从行为出发进行推断的时候，其实就是一个HMM，隐变量就是情绪，观测变量就是行为。</p>
+</div>
+<hr />
+<h2 id="hmm_1">HMM的学习过程<a class="headerlink" href="#hmm_1" title="Permanent link">&para;</a></h2>
+<p>上面分别讲了Markov Chain的转移概率矩阵和隐变量的发射概率矩阵的确定过程。但是HMM的学习并不像上面两个概率矩阵单独学习那样简单，因为转移概率矩阵和发射概率矩阵是耦合在一起的。直接从观测变量的分布同时学习两个概率矩阵是不行的，需要借助一些方法（EM算法）。EM算法分为E-step和M-step，现在先强行给出E-step和M-step需要估计的参数。E-step估计的参数是在当前观测序列下每个时刻隐状态的分布概率，M-step估计的参数就是HMM的参数（转移概率矩阵和发射概率矩阵）。其实E-step的估计参数的选择是自然的，因为我们从Markov Chain添加发射转换到HMM的过程中，就是把HMM的状态变得未知，两个概率矩阵的估计在HMM状态已知的情况下是相当简单的，也即上文的两个估计公式。问题转换为E-step的参数的估计是否合理以及是否可以计算。后面的推导将说明这个估计的有效性和合理性。</p>
+<p>接下来介绍HMM的学习算法：Baum-Welch算法。</p>
+<h3 id="_1">辅助变量的定义和计算过程<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>考虑时刻的数量<span class="arithmatex">\(T\)</span>和状态的数量<span class="arithmatex">\(N\)</span>, 路径的个数是指数的，也即<span class="arithmatex">\(N^T\)</span>个，这个计算代价几乎是无法接受的。而Baum-Welch算法是使用动态规划的思路，降低计算量。因为每个时刻<span class="arithmatex">\(t\)</span>的状态<span class="arithmatex">\(S_t\)</span>的实际上只是由前置状态转移而来的，因此无需记录所有的可能路径，因此如果考虑特定时刻<span class="arithmatex">\(t\)</span>的状态分布，只需对<span class="arithmatex">\(t-1\)</span>时刻的所有状态转移到<span class="arithmatex">\(t\)</span>时刻的状态求和即可。但是还需要把转移的隐状态和观测状态结合起来。因此定义如下辅助变量：
+<span class="arithmatex">\(<span class="arithmatex">\(\alpha_{t}(j) = \left[\sum_{i=1}^{N} \alpha_{t-1}(i)\, A_{ij}\right] B_{j,o_{t}}\)</span>\)</span>
+<span class="arithmatex">\(<span class="arithmatex">\(\beta_t(i) = \sum_{j=1}^{N} A_{ij}\, B_{j,o_{t+1}}\, \beta_{t+1}(j)\)</span>\)</span>
+现在对辅助变量的含义做精确的解释：第一个辅助变量为前向过程的辅助变量，其含义是在截至到<span class="arithmatex">\(t\)</span>时刻，给定从<span class="arithmatex">\(0\)</span>到<span class="arithmatex">\(t\)</span>时刻的所有观测变量的情况下，<span class="arithmatex">\(t\)</span>时刻的隐变量是<span class="arithmatex">\(j\)</span>并且观测变量是<span class="arithmatex">\(o\)</span>的联合概率。第二个变量的含义类似但是也有区别，注意到这个公式不包含<span class="arithmatex">\(t\)</span>时刻的发射概率，所以不是<span class="arithmatex">\(t\)</span>时刻隐状态为<span class="arithmatex">\(j\)</span>，观测变量为<span class="arithmatex">\(o\)</span>的联合概率，实际上这个概率是<span class="arithmatex">\(t\)</span>时刻状态为<span class="arithmatex">\(j\)</span>时，后续观测序列的条件概率。我们分别把两个概率的含义对应的公式罗列如下，方便理解这种前后向的不对称性。但是，在后续的推导中，我们也将理解这种不对称性带来的计算上的便利。
+<span class="arithmatex">\(<span class="arithmatex">\(\alpha_t(i)=P(o_1,\dots,o_t,\ q_t=i\mid \theta)\)</span>\)</span>
+<span class="arithmatex">\(<span class="arithmatex">\(\beta_t(i)=P(o_{t+1:T}\mid q_t=i)\)</span>\)</span>
+把两个变量乘起来，得到：
+<span class="arithmatex">\(<span class="arithmatex">\(\alpha_t(i)\beta_t(i)=P(o_{1:t}, q_t=i)P(o_{t+1:T}\mid q_t=i)\)</span>\)</span>
+可以看到<span class="arithmatex">\(\alpha_t\)</span>和<span class="arithmatex">\(\beta_t\)</span>的不对称性正好可以合并成如下联合概率：
+<span class="arithmatex">\(<span class="arithmatex">\(\alpha_t(i)\beta_t(i)=P(o_{1:T},q_t=i)\)</span>\)</span>
+这个概率的含义是在<span class="arithmatex">\(t\)</span>时刻隐状态是<span class="arithmatex">\(j\)</span>和观测序列是当前序列的联合概率。<br />
+但是我们想要的是在当前观测序列确定的情况下，<span class="arithmatex">\(t\)</span>时刻各个状态的后验概率，时刻给定后，各个状态的后验概率需要满足概率和为1的要求，联合概率显然不满足，因此做归一化：
+<span class="arithmatex">\(<span class="arithmatex">\(\gamma_t(i)=\frac{\alpha_t(i)\beta_t(i)}{\sum_j \alpha_t(j)\beta_t(j)}=P(q_t=i\mid O)\)</span>\)</span>
+这个就是Baum-Welch算法需要隐状态的后验估计。<br />
+现在解释下前后向计算这样设置的原因以及为什么要相乘：<span class="arithmatex">\(\alpha_t\)</span>和<span class="arithmatex">\(\beta_t\)</span>的计算可以从递推公式发现是满足动态规划的子结构性质的，并且计算复杂度为<span class="arithmatex">\(O(TN^2)\)</span>，相乘的原因是乘完后的联合概率是考虑了观测序列整体的，对比之下，<span class="arithmatex">\(\alpha_t\)</span>是到<span class="arithmatex">\(t\)</span>时刻的观测序列和状态<span class="arithmatex">\(i\)</span>的联合概率。显然在整体观测序列已知的条件下，求解概率使用全观测序列的信息是更合理的。继续对比解码流程中只用前<span class="arithmatex">\(t\)</span>时刻的做法，原因是自回归的解码过程是不知道后续的状态的，所以使用当前观测时刻和之前的状态。<br />
+接下来定义辅助计算发射概率的辅助变量：
+<span class="arithmatex">\(<span class="arithmatex">\(\xi_t(i,j)=P(q_t=i,q_{t+1}=j\mid O,\theta)\)</span>\)</span>
+同样的，因为上述辅助变量是个后验概率，含义为在HMM参数已知和观测序列确定时，在<span class="arithmatex">\(t\)</span>时刻为状态<span class="arithmatex">\(i\)</span>和<span class="arithmatex">\(t+1\)</span>时刻为状态<span class="arithmatex">\(j\)</span>的联合概率。计算公式如下：
+<span class="arithmatex">\(<span class="arithmatex">\(\xi_t(i,j)=\frac{\alpha_t(i)a_{ij}b_j(o_{t+1})\beta_{t+1}(j)}{P(O\mid\theta)}\)</span>\)</span>
+对该公式再做一点解释：因为是概率，所以有分母来负责归一化。其次注意到分子有发射概率<span class="arithmatex">\(b_j(o_{t+1})\)</span>，这是前后向不对称的又一次体现，因为后向过程的变量<span class="arithmatex">\(\beta_{t+1}\)</span>不负责<span class="arithmatex">\(t+1\)</span>时刻（该时刻的状态是<span class="arithmatex">\(\beta_{t+1}\)</span>作为条件概率的条件），所以由该公式负责结合发射概率。</p>
+<h3 id="hmm_2">基于辅助变量的HMM参数学习过程<a class="headerlink" href="#hmm_2" title="Permanent link">&para;</a></h3>
+<p>以上辅助变量的确定有一个前提，那就是HMM的两个参数（转移概率矩阵和发射概率矩阵）已知。但是因为我们使用的是EM算法，其实上步对应的是E-step，当辅助变量确定下来，又计算HMM参数的过程对应EM算法的M-step。这步是相当简单的，只需要把离散计算过程推广到概率计算过程就可以了，我们称为从hard计算到soft计算的转换。<br />
+回顾普通的转移概率估计：
+<span class="arithmatex">\(<span class="arithmatex">\(a_{ij}=\frac{\text{从 } i \text{ 转移到 } j \text{ 的次数}}{\text{从 } i \text{ 出发的总次数}}\)</span>\)</span>
+基于辅助变量的转移概率估计：
+<span class="arithmatex">\(<span class="arithmatex">\(a_{ij}^{new}=\frac{\sum_{t=1}^{T-1}\xi_t(i,j)}{\sum_{t=1}^{T-1}\gamma_t(i)}\)</span>\)</span>
+对上式做下解释：<span class="arithmatex">\(\gamma_t(i)\)</span>表示<span class="arithmatex">\(t\)</span>时刻状态<span class="arithmatex">\(i\)</span>的后验概率，可以是小数，是所谓的soft值，而普通的估计在一个序列中，特定时刻的状态是确定的。<span class="arithmatex">\(\xi_t(i,j)\)</span>是<span class="arithmatex">\(t\)</span>时刻为状态<span class="arithmatex">\(i\)</span>和<span class="arithmatex">\(t+1\)</span>时刻为状态<span class="arithmatex">\(j\)</span>的联合概率，也是soft值。<br />
+注意到我们在时间维度上做了求和，这是时间齐次性的体现（转移只和状态有关，和时间无关）。<br />
+接下来估计发射概率：
+<span class="arithmatex">\(<span class="arithmatex">\(b_i(k)^{new}=\frac{\sum_{t:o_t=k}\gamma_t(i)}{\sum_{t=1}^{T}\gamma_t(i)}\)</span>\)</span>
+对上式做下解释：因为观测序列是已知的，所以估计与状态<span class="arithmatex">\(k\)</span>有关的发射概率时，分母只使用观测状态为<span class="arithmatex">\(k\)</span>的时间步的<span class="arithmatex">\(\gamma_t(i)\)</span>的概率。</p>
+<h2 id="_2">解码<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">逐帧的贪心解码<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>解码过程以贪心解码为例。其实就是一个Baum-Welch算法的前向过程的简化。回顾前向过程的计算，假设条件是HMM的转移概率矩阵和发射概率矩阵已知，在解码过程中，估计已经结束，HMM确实已知。 但是解码和前向过程略有不同，前向是为了建立观测序列的似然，解码是为了确定隐状态。所以前向在估计似然时的求和，替换成取最大值即可，最大值对应的状态就是估计的隐状态。
+<span class="arithmatex">\(<span class="arithmatex">\(\delta_t(j)=b_j(o_t)\max_i\left[\delta_{t-1}(i)a_{ij}\right]\)</span>\)</span>
+这种逐帧贪心的解码是最简单的，但是却不一定是最优的，因为每步只考虑当前帧的取值，没有结合已经解码的前置序列。接下来我们从序列整体概率最大的目标出发，介绍Viterbi解码过程。</p>
+<h3 id="viterbi">Viterbi解码<a class="headerlink" href="#viterbi" title="Permanent link">&para;</a></h3>
+<p>和逐帧的贪心解码不同，Viterbi不在当前时刻直接选出解码结果，而是记录当前帧的每个状态的概率值，以及从前一帧的哪个状态转移过来的概率值是最大的，这个信息是可以回溯的，当最后一帧计算完成后，可以知道最后一帧的哪个状态是概率最大的，然后用记录的回溯信息反向把每帧的隐状态推测出来。这就是Viterbi解码的过程。当状态空间很大的时候，解码过程需要记录的数据和计算量很大，因此可以做个折衷，只保留部分概率较高的状态，允许一定的误差来降低计算和内存开销，这就是接下来要介绍的Beam Search解码。</p>
+<h3 id="beam-search">Beam Search<a class="headerlink" href="#beam-search" title="Permanent link">&para;</a></h3>
+<p>Beam Search的出发点在上面介绍过了，这里只做补充。Beam Search约定一个数值<span class="arithmatex">\(N\)</span>，这个值的含义是在解码过程中只保留N个候选，加快解码速度。
+<img src="./picture/hmm_beam_search.png" width="500" alt="hmm_beam_search">  </p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../feature_extract/hearing_vs_feature_extraction/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 人耳听觉与特征提取">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                人耳听觉与特征提取
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03_LAS/" class="md-footer__link md-footer__link--next" aria-label="下一页: LAS">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                LAS
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "navigation.tracking", "navigation.top", "navigation.tabs", "navigation.footer", "navigation.indexes"], "search": "../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56dfad97.min.js"></script>
+      
+        <script src="https://cdn.tonycrane.cc/utils/katex.min.js"></script>
+      
+        <script src="../../../js/katex.js"></script>
+      
+    
+  </body>
+</html>
