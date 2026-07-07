@@ -31,7 +31,7 @@ $$
 |int8|2^8|−128 ~ 127|
 
 ## 收益
-以float31 -> int8为例，暂时忽略量化相关的参数， 因为相对于矩阵的存储， 量化参数非常少。  
+以float32 -> int8为例，暂时忽略量化相关的参数， 因为相对于矩阵的存储， 量化参数非常少。  
 存储降低的情况： 31bit/number -> 8bit/number , 4倍存储下降。  
 计算需求的降低： 31bit float GEMM -> 8bit float GEMM + elementwise multiply(可以通过折叠消除) + quant + dequant. [收益示例](#gemm-acclerate)  ( GEMM: general matrix multiply )
 
@@ -195,7 +195,13 @@ $$ \mathbf{Y} = (\mathbf{X} \, \mathrm{diag}(\mathbf{s})^{-1}) \cdot (\mathrm{di
    <img src="./assets/img/awq3.png" style="zoom: 60%">
    </center>
 3. 自动化检索出显著的通道权重。 $$ \mathcal{L}(\mathbf{s}) = \left\| Q(\mathbf{W} \cdot \mathrm{diag}(\mathbf{s})) (\mathrm{diag}(\mathbf{s})^{-1} \cdot \mathbf{X}) - \mathbf{W}\mathbf{X} \right\| $$
-4. 基于AWQ实现了边缘设备LLM部署框架[TinyChat](https://github.com/mit-han-lab/TinyChatEngine)。框架的核心是高效的权重读取和kernel fusion (做个补充说明)
+4. 3中的$Q()$是量化函数，是不可导的。可以使用梯度直通等近似方案学习，但是论文提出这样的收敛过程不够稳定。一般不可导的处理有三种方案：近似估计，离散分布松弛成连续的（adaround使用的方法），离散值的空间检索（grid search）。论文采用了第三种grid search的方案。公式如下，$\mathbf{s}_{\mathbf{X}}$是激活值每个通道的均值，$\alpha$是指数调整系数。在$[0-1]$之间做grid search。策略比较简单，只有一个超参$\alpha$需要确定。
+
+$$\mathbf{s} = \mathbf{s}_{\mathbf{X}}^{\alpha},\qquad\alpha^{*} = \arg\min_{\alpha} \mathcal{L}\left(\mathbf{s}_{\mathbf{X}}^{\alpha}\right)$$
+
+
+
+5. 基于AWQ实现了边缘设备LLM部署框架[TinyChat](https://github.com/mit-han-lab/TinyChatEngine)。框架的核心是高效的权重读取和kernel fusion (做个补充说明)
 
 实验结果
 <div align="center">
