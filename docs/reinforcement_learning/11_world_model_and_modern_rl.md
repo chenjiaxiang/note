@@ -2,7 +2,7 @@
 
 前面的算法大多直接从真实环境采样，再更新策略或价值函数。世界模型（World Model）换了一个思路：先学习环境在潜在空间里的动态，再在模型里想象未来，用想象结果帮助决策。
 
-<img src="./picture/world_model_loop.png" width="700" alt="world model loop">
+<img src="../picture/world_model_loop.png" width="700" alt="world model loop">
 
 ## 世界模型的核心
 

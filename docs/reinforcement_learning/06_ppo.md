@@ -2,7 +2,7 @@
 
 PPO（Proximal Policy Optimization）是策略梯度家族里非常常用的算法。它的核心目标不是提出一个全新的学习信号，而是让策略更新别走得太远。
 
-<img src="./picture/ppo_clip_objective.png" width="700" alt="ppo clip objective">
+<img src="../picture/ppo_clip_objective.png" width="700" alt="ppo clip objective">
 
 ## 为什么需要 PPO
 

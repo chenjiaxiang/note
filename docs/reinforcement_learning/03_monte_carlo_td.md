@@ -2,7 +2,7 @@
 
 当环境模型未知时，我们无法枚举 $P(s'|s,a)$ 来做 Bellman 期望备份，只能让智能体与环境交互，拿到轨迹后估计价值函数。蒙特卡洛（Monte Carlo, MC）和时序差分（Temporal Difference, TD）是两种基本估计方式。
 
-<img src="./picture/mc_vs_td.png" width="700" alt="mc vs td">
+<img src="../picture/mc_vs_td.png" width="700" alt="mc vs td">
 
 ## 蒙特卡洛方法
 

@@ -20,7 +20,7 @@ $$
 
 量化图示：
 <center class='img'>
-<img src="assets/img/most_general_quant.png" style="zoom: 40%;">
+<img src="../assets/img/most_general_quant.png" style="zoom: 40%;">
 </center>
 
 不同类型数据的分布和采样点数, 以[float32](https://www.h-schmidt.net/FloatConverter/IEEE754.html)和int8为例  
@@ -52,8 +52,8 @@ $$
 对称量化与非对称量化
 
 示意图<p align="center">
-<img src="./assets/img/sym_and_asym_quantization.png" width="30%">
-<img src="./assets/img/whitepaper1.png" width="30%">
+<img src="../assets/img/sym_and_asym_quantization.png" width="30%">
+<img src="../assets/img/whitepaper1.png" width="30%">
 </p>
 
 
@@ -79,7 +79,7 @@ $$
 相对于对称量化计算量增加较多，因此不太采用非对称量化方案。
 ## 整体计算过程示意
 <center class=img>
-<img src="./assets/img/whitepaper2.png" style="zoom: 40%">
+<img src="../assets/img/whitepaper2.png" style="zoom: 40%">
 </center>
 
 说明： int8一般表示得比较满，使用int8存储结果几乎一定会溢出，因此int8的GEMM结果常采用int32存储
@@ -106,7 +106,7 @@ $$
 [可用代码](https://github.com/bitsandbytes-foundation/bitsandbytes)  
 思想: 把量化误差较大的通道不量化，对通道进行分离，部分通道使用float GEMM, 部分通道使用int GEMM。不量化的通道如何选择？激活值比较大的通道。
 <center class=img>
-<img src="./assets/img/LLMint8.png" style="zoom: 30%">
+<img src="../assets/img/LLMint8.png" style="zoom: 30%">
 </center>
 问题：矩阵分解其实成本比较高。是否有对阈值设置的说明? 
 
@@ -134,14 +134,14 @@ $$
 思想：基于数据观察。
 1. 激活通道间最大值分布差异较大，权重通道间分布差异较小
     <center class=img>
-    <img src="./assets/img/sq1.png" style="zoom: 50%">
+    <img src="../assets/img/sq1.png" style="zoom: 50%">
     </center>
 2. 大值通道的量化误差会比较大
 3. 通过等价的数学变换把激活值的大值往权重转移
 $$ \mathbf{Y} = (\mathbf{X} \, \mathrm{diag}(\mathbf{s})^{-1}) \cdot (\mathrm{diag}(\mathbf{s}) \mathbf{W}) = \hat{\mathbf{X}} \hat{\mathbf{W}}
  $$
  <center class=img>
- <img src="./assets/img/sq2.png" style="zoom: 60%">
+ <img src="../assets/img/sq2.png" style="zoom: 60%">
  </center>
 
 实验结果
@@ -187,12 +187,12 @@ $$ \mathbf{Y} = (\mathbf{X} \, \mathrm{diag}(\mathbf{s})^{-1}) \cdot (\mathrm{di
 思路：
 1. 权重对于模型性能的贡献是不平衡的，其中只有部分权重（0.1%-1%）是显著的，跳过这些权重的量化会显著降低量化带来的性能下降。
    <center class=img>
-   <img src="./assets/img/awq1.png" style="zoom: 40%">
+   <img src="../assets/img/awq1.png" style="zoom: 40%">
    </center>
 2. 不同于LLM.int8()方案，如果将对应的显著通道权重不量化，依然会面临kernel复杂的问题。通过对显著通道的权重做放大来降低量化误差。可以以（255, 0.5）的例子说明，对max为0.5的通道做放大，然后量化，反量化后在除以放大系数，可以显著降低量化损失。并且可以直接使用per-tensor量化。  
 最左侧是RTN，中间是LLM.int8(), 右侧是AWQ。 
    <center class="img">
-   <img src="./assets/img/awq3.png" style="zoom: 60%">
+   <img src="../assets/img/awq3.png" style="zoom: 60%">
    </center>
 3. 自动化检索出显著的通道权重。 $$ \mathcal{L}(\mathbf{s}) = \left\| Q(\mathbf{W} \cdot \mathrm{diag}(\mathbf{s})) (\mathrm{diag}(\mathbf{s})^{-1} \cdot \mathbf{X}) - \mathbf{W}\mathbf{X} \right\| $$
 4. 3中的$Q()$是量化函数，是不可导的。可以使用梯度直通等近似方案学习，但是论文提出这样的收敛过程不够稳定。一般不可导的处理有三种方案：近似估计，离散分布松弛成连续的（adaround使用的方法），离散值的空间检索（grid search）。论文采用了第三种grid search的方案。公式如下，$\mathbf{s}_{\mathbf{X}}$是激活值每个通道的均值，$\alpha$是指数调整系数。在$[0-1]$之间做grid search。策略比较简单，只有一个超参$\alpha$需要确定。
@@ -229,7 +229,7 @@ $$\mathbf{s} = \mathbf{s}_{\mathbf{X}}^{\alpha},\qquad\alpha^{*} = \arg\min_{\al
 能做到DFQ（data_free_quantization有条件的： 模型有BN层， 那LN是不是可以， 从统计的角度看是可以的）  
 conv的权重没有transformer的linear中的那么平坦。
 <center class=img>
-<img src="./assets/img/BC1.png" style="zoom: 80%">
+<img src="../assets/img/BC1.png" style="zoom: 80%">
 </center>  
 跨层的权重均衡  
 理论公式： 
@@ -258,7 +258,7 @@ $$ \begin{aligned}
 其实作用不大，relu不是严格满足第三行到第四行的变化的，会在零点部分有误差。论文通过对c进行选择 $ \mathbf{c} = \max(0, \beta - 3\gamma) $，让较小数量（0.135%）的数据受到影响。但是c的作用本来就是抑制大b，数值不能大的话，起不到好的抑制作用。所以不如不用，还引入了近似。
 
 <center class=img>
-<img src="./assets/img/relu_shift.png" style="zoom: 80%">
+<img src="../assets/img/relu_shift.png" style="zoom: 80%">
 </center>
 
 量化偏置修正  
@@ -299,7 +299,7 @@ $$ \Delta \mathbf{w}^T \cdot \mathbf{H}^{(\mathbf{w})} \cdot \Delta \mathbf{w}
 这种情况下，每个w都做RTN就不一定误差最小了。  
 2. 实验验证随机取整的上限优于RTN。准确率与误差成反比。
    <center class=img>
-   <img src="./assets/img/adaround1.png" style="zoom: 50%">
+   <img src="../assets/img/adaround1.png" style="zoom: 50%">
    </center>
 3. 如何找到一个较好的取整方案。取整本身是离散优化问题，直接做的话需要遍历解空间，太大了，基本没法解。<br>     
 4. 引入辅助变量，对空间进行松弛（让解可以搜索非离散值），将问题变成连续的优化问题。    
@@ -320,13 +320,13 @@ $$ \Delta \mathbf{w}^T \cdot \mathbf{H}^{(\mathbf{w})} \cdot \Delta \mathbf{w}
 
    辅助函数的形状：
    <center class=img>
-   <img src="./assets/img/adaround2.png" style="zoom: 50%">
+   <img src="../assets/img/adaround2.png" style="zoom: 50%">
    </center>
 
 5. 优化过程: 辅助函数使用退火策略,前期偏向于自由探索（高  $\beta$ 值下辅助函数比较平坦 ）,  后期让 $h(\mathbf{V}_{i,j})  $ 收敛到0和1    
 6. 优化结果：
    <center class=img>
-   <img src="./assets/img/adaround3.png" style="zoom: 50%">
+   <img src="../assets/img/adaround3.png" style="zoom: 50%">
    </center>
 
 实验结果
@@ -361,22 +361,22 @@ $$ \Delta \mathbf{w}^T \cdot \mathbf{H}^{(\mathbf{w})} \cdot \Delta \mathbf{w}
 
 量化带来的指标下降原因分析
 <center class=img>
-<img src="./assets/img/zeroquant2.png" style="zoom: 50%">
+<img src="../assets/img/zeroquant2.png" style="zoom: 50%">
 </center>
 
 LKD的做法：当蒸馏第K层的时候，量化模型并非采用前K-1个量化后的层。而是只蒸馏第K层，额外的显存开销较小。
 <center class=img>
-<img src="./assets/img/LKD.png" style="zoom: 50%">
+<img src="../assets/img/LKD.png" style="zoom: 50%">
 </center>
 
 量化/反量化的fold消除
 <center class=img>
-<img src="./assets/img/zeroquant1.png" style="zoom: 50%">
+<img src="../assets/img/zeroquant1.png" style="zoom: 50%">
 </center>
 
 折叠的示例, [代码示例以及计算加速效果](https://triton-lang.org/main/getting-started/tutorials/02-fused-softmax.html#sphx-glr-getting-started-tutorials-02-fused-softmax-py)
 <center class=img>
-<img src="./assets/img/fold.png" style="zoom: 80%">
+<img src="../assets/img/fold.png" style="zoom: 80%">
 </center>
 
 实验结果
@@ -679,7 +679,7 @@ if __name__ == "__main__":
 
 运行结果：
 <center class=img>
-<img src="./assets/img/gemm_compare.png" style="zoom: 50%">
+<img src="../assets/img/gemm_compare.png" style="zoom: 50%">
 </center>
 
 反向传播的理解示例代码

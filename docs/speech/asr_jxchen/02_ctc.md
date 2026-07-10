@@ -18,7 +18,7 @@ $aap \xi ppp \xi le$ -> $ap \xi p \xi le $-> $apple$
 但是所有的合法序列要显式都找出来计算量太大，是$O(N^T)$的指数复杂度，是不可接受的。所以借鉴HMM的前后向过程，用动态规划来求解。  
 这里需要注意，我们不再关注每个时刻的监督信号，因为本身就不存在，不同合法序列在每个时刻对应的phone可能都是不同的。我们只求所有合法序列的概率和。  
 
-<img src="./picture/ctc_train.png" width="500" alt="ctc_train">  
+<img src="../picture/ctc_train.png" width="500" alt="ctc_train">  
 
 定义辅助变量：
 前向变量 $\alpha(t, s)$：在时刻 $t$ 已经产生了前缀 $\mathbf{l}'[1:s]$ 的所有合法路径的概率之和

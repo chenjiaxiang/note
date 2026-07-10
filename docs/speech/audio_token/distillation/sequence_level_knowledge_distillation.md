@@ -17,13 +17,13 @@ ps: 基础任务是NMT（neural machine translation）
 $\mathcal{L}(\theta; \theta_T) = (1 - \alpha) \mathcal{L}_{\text{NLL}}(\theta) + \alpha \mathcal{L}_{\text{KD}}(\theta; \theta_T)$  
 第一项是从GT中学习的loss，第二项是蒸馏的loss
 ### word level
-<img src="../image/distillation/word_level.png" alt="word level" width="800"/> </br>
+<img src="../../image/distillation/word_level.png" alt="word level" width="800"/> </br>
 说明：  
 1. 直接蒸馏序列中的每个token的所有概率分布
 2. 和GT一起学
 
 ### seq level
-<img src="../image/distillation/seq_level.png" alt="word level" width="800"/> </br> 
+<img src="../../image/distillation/seq_level.png" alt="word level" width="800"/> </br> 
 说明：  
 1. 蒸馏的目标不再是每个token对应的所有分布，而是在teacher model上beam search得到的多个序列的概率训练  
 2. 和word level的相似性：仅学被beam search搜出来的序列概率  
@@ -32,7 +32,7 @@ $\mathcal{L}(\theta; \theta_T) = (1 - \alpha) \mathcal{L}_{\text{NLL}}(\theta) +
 5. 也和GT一起学
 
 ### seq level interpolation
-<img src="../image/distillation/seq_level_inter.png" alt="word level" width="800"/> </br>
+<img src="../../image/distillation/seq_level_inter.png" alt="word level" width="800"/> </br>
 说明：  
 1. 上面两种方法都是和GT一起学，seq level interpolation选择不一起学。
 2. 把GT和beam search结合起来：beam search搜出来的结果不一定合理。多搜一些，然后和GT算相似度或者距离，选相近的序列进行蒸馏学习。

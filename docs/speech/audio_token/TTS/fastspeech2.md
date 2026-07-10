@@ -16,7 +16,7 @@ fastspeech2提出的解决方案：
 2. 注入信息怎么获取：a. infer时使用predictor从GT语音中预测 b. 训练时来自于GT
 
 ### 图示
-<img src="../image/TTS/fastspeech2.png" alt="HiFI" width="800"/>
+<img src="../../image/TTS/fastspeech2.png" alt="HiFI" width="800"/>
 
 ### 处理流程
 1. encoder把phoneme embedding序列转换成hidden state序列

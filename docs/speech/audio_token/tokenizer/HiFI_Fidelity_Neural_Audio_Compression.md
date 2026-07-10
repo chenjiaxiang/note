@@ -1,2 +1,2 @@
 # High_Fidelity_Neural_Audio_Compression [paper](https://ar5iv.labs.arxiv.org/html/2210.13438?_immersive_translate_auto_translate=1)
-<img src="../image/High_Fidelity_ Neural_Audio_Compression.png" alt="HiFI" width="200"/>
+<img src="../../image/High_Fidelity_ Neural_Audio_Compression.png" alt="HiFI" width="200"/>

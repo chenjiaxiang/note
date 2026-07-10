@@ -2,7 +2,7 @@
 
 DQN 适合离散动作，因为它可以枚举所有动作并取最大 Q 值。连续动作空间不能这么做，例如机器人关节力矩、自动驾驶方向盘角度、控制器输出都是连续的。DDPG（Deep Deterministic Policy Gradient）就是为连续动作设计的。
 
-<img src="./picture/ddpg_continuous_control.png" width="700" alt="ddpg continuous control">
+<img src="../picture/ddpg_continuous_control.png" width="700" alt="ddpg continuous control">
 
 ## 确定性策略
 

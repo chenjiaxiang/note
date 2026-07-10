@@ -2,7 +2,7 @@
 
 价值型方法先学习 $Q(s,a)$，再通过 $\arg\max_a Q(s,a)$ 选择动作。策略梯度（Policy Gradient, PG）换了一个角度：直接学习策略 $\pi_\theta(a|s)$，让高回报轨迹出现的概率变大。
 
-<img src="./picture/policy_gradient_pipeline.png" width="700" alt="policy gradient pipeline">
+<img src="../picture/policy_gradient_pipeline.png" width="700" alt="policy gradient pipeline">
 
 ## 目标函数
 

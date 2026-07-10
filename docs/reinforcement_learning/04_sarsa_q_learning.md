@@ -2,7 +2,7 @@
 
 Sarsa 和 Q-learning 都是表格型控制算法。它们学习动作价值函数 $Q(s,a)$，再通过 $Q$ 值选择动作。两者更新式非常接近，但行为差异很大。
 
-<img src="./picture/sarsa_vs_q_learning.png" width="700" alt="sarsa vs q learning">
+<img src="../picture/sarsa_vs_q_learning.png" width="700" alt="sarsa vs q learning">
 
 ## 动作价值更新
 

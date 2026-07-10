@@ -2,13 +2,13 @@
 
 强化学习（Reinforcement Learning, RL）研究的是一个智能体如何通过和环境交互来学习决策。它不像监督学习那样直接给出“正确标签”，而是只给出奖励信号：某个动作执行之后，环境会返回新的状态和奖励，智能体要从这些反馈中推断“什么行为长期来看更好”。
 
-<img src="./picture/rl_overview_map.png" width="700" alt="reinforcement learning overview">
+<img src="../picture/rl_overview_map.png" width="700" alt="reinforcement learning overview">
 
 ## 基本问题
 
 强化学习问题可以压缩成一个闭环：
 
-<img src="./picture/agent_environment_loop.png" width="650" alt="agent environment loop">
+<img src="../picture/agent_environment_loop.png" width="650" alt="agent environment loop">
 
 在时刻 $t$，智能体看到状态 $s_t$，选择动作 $a_t$，环境返回奖励 $r_t$ 和下一个状态 $s_{t+1}$。学习目标不是让某一步奖励最大，而是让长期回报最大：
 

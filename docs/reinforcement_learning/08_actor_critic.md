@@ -2,7 +2,7 @@
 
 Actor-Critic 把策略型方法和价值型方法结合起来。Actor 负责选择动作，Critic 负责评价动作或状态。策略更新时不再只依赖高方差的完整回报，而是使用 Critic 给出的价值估计。
 
-<img src="./picture/actor_critic_arch.png" width="700" alt="actor critic architecture">
+<img src="../picture/actor_critic_arch.png" width="700" alt="actor critic architecture">
 
 ## Actor 与 Critic
 

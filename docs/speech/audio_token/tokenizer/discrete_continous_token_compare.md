@@ -4,7 +4,7 @@
 比较在SLM任务中, 使用离散token和连续token的优劣势
 
 ## 离散和连续在论文中的定义
-<img src="../image/token_compare.png" alt="disentanglement" width="200"/>
+<img src="../../image/token_compare.png" alt="disentanglement" width="200"/>
 
 1. 由feature extractor输出的token经过线性变化后直接使用的方式称为连续
 2. 经过VQ和RVQ处理后再送入后续模型的token处理方式称为离散。（离散是token取值空间变得离散, 只能取有限个数的值。 离散值数量上界： $V_{upper\_bound} = \prod_i code\_num\_of\_layer_i$）
@@ -105,7 +105,7 @@ claude:
 收敛速度对比
 
 
-<img src="../image/convergence.png" alt="convergence" width="200"/>
+<img src="../../image/convergence.png" alt="convergence" width="200"/>
 
 1. 离散token相对于连续token收敛快很多。  
 讨论：
@@ -114,7 +114,7 @@ claude:
 
 
 token利用不平衡性分析
-<img src="../image/token_imbalance.png" alt="token_imblance" width="200"/>
+<img src="../../image/token_imbalance.png" alt="token_imblance" width="200"/>
 
 1. 论文指出离散后的token有严重的数据不平衡问题(长尾效应严重)
 2. 但是提出的针对这种问题的缓解办法是使用连续表征(听起来不合理)
@@ -126,7 +126,7 @@ token利用不平衡性分析
 
 不同层级特征对应的WER
 
-<img src="../image/layer_for_wer.png" alt="layer_for_wer" width="200"/>
+<img src="../../image/layer_for_wer.png" alt="layer_for_wer" width="200"/>
 
 1. 不同层捕获的信息重点可能不同, 导致适配不同的任务  
 

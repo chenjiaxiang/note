@@ -1,6 +1,6 @@
 # LAS
 LAS（Listen Attend Spell）也称为AED（Attention based Encoder Decoder）。整体结构如下图  
-<img src="./picture/LAS.png" width="500" alt="LAS">  
+<img src="../picture/LAS.png" width="500" alt="LAS">  
 先根据公式对这两个名称对应的模块做下介绍。公式如下：
 $$c_u = \sum_{t} \alpha_{u,t} \cdot h_t, \quad \alpha_{u,t} = \text{softmax}_t(\text{score}(s_{u-1}, h_t))$$
 $$P(y \mid x) = \prod_{u=1}^{U} P(y_u \mid y_{1:u-1}, x_{1:T})$$

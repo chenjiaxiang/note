@@ -12,7 +12,7 @@
 ## 模型
 
 ### 方法图示
-<img src="../image/LLMASR/overall.png" alt="overall" width="800"/>
+<img src="../../image/LLMASR/overall.png" alt="overall" width="800"/>
 
 ### 数据与训练过程说明
 1. 数据说明

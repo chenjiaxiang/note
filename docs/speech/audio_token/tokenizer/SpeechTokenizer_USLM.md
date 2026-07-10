@@ -158,7 +158,7 @@ RVQ的解耦表现
 - RVQ-2:8中, 注入的信息越多, 说话人相似度越高, 说明RVQ-2:8主要负责富语言信息, 但是只使用RVQ-1也达到了0.72的说话人相似度。
 
 2. 数据分布
-<img src="../image/DISENTANGLEMENT.png" alt="disentanglement" width="200"/>
+<img src="../../image/DISENTANGLEMENT.png" alt="disentanglement" width="200"/>
 (不同说话人选10句话, 经过SpeechTokenizer后在时间维度做pooling, 然后使用t-SNE做降维和可视化)
 
 - RVQ-1在这个分布中是完全分散的，说明其中的与特定说话人的相关信息较少。 

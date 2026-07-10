@@ -2,7 +2,7 @@
 
 Q-learning 用表格存储 $Q(s,a)$。当状态是图像、连续向量或高维传感器输入时，表格无法覆盖所有状态。DQN（Deep Q-Network）用神经网络近似动作价值函数，把 Q-learning 推到高维状态空间。
 
-<img src="./picture/dqn_training_loop.png" width="700" alt="dqn training loop">
+<img src="../picture/dqn_training_loop.png" width="700" alt="dqn training loop">
 
 ## 从 Q 表到 Q 网络
 

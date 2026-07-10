@@ -2,7 +2,7 @@
 
 强化学习的数学语言是马尔可夫决策过程（Markov Decision Process, MDP）。MDP 把“智能体与环境交互”抽象成状态、动作、转移概率和奖励。
 
-<img src="./picture/mdp_bellman_backup.png" width="700" alt="mdp bellman backup">
+<img src="../picture/mdp_bellman_backup.png" width="700" alt="mdp bellman backup">
 
 ## MDP 五元组
 
