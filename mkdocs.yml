@@ -27,6 +27,7 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - sane_lists
+  - extra
   - admonition
   - pymdownx.keys
   - pymdownx.mark
@@ -145,9 +146,22 @@ nav:
       - USLM: speech/audio_token/tokenizer/SpeechTokenizer_USLM.md
     - LLMASR:
       - 语音和LLM的结合: speech/audio_token/llmasr/effecitive_text_adaption_for_llm_based_asr.md
+  - Reinforcement Learning:
+    - 强化学习综述: reinforcement_learning/00_overview.md
+    - 强化学习基础与 MDP: reinforcement_learning/01_foundations_mdp.md
+    - 策略迭代与价值迭代: reinforcement_learning/02_value_iteration_policy_iteration.md
+    - 蒙特卡洛与时序差分: reinforcement_learning/03_monte_carlo_td.md
+    - Sarsa 与 Q-learning: reinforcement_learning/04_sarsa_q_learning.md
+    - 策略梯度: reinforcement_learning/05_policy_gradient.md
+    - PPO: reinforcement_learning/06_ppo.md
+    - DQN: reinforcement_learning/07_dqn.md
+    - Actor-Critic: reinforcement_learning/08_actor_critic.md
+    - DDPG 连续控制: reinforcement_learning/09_ddpg_continuous_control.md
+    - 稀疏奖励与模仿学习: reinforcement_learning/10_sparse_reward_imitation.md
+    - 世界模型与现代强化学习: reinforcement_learning/11_world_model_and_modern_rl.md
   - 计算加速:
     - 量化:
-      - 量化综述: compute_accelerate/quantization/quantization.md
+      - 量化综述: computer_accerlate/quantization/quantization.md
     - 并行计算:
-      - 并行计算综述: compute_accelerate/parallel/parallel.md
+      - 并行计算综述: computer_accerlate/parallel/parallel.md
   - About: about.md

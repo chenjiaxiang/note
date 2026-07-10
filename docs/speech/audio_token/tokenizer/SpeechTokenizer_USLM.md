@@ -100,6 +100,7 @@ VISQOL(客观评测指标) [old paper](https://static.googleusercontent.com/medi
 MUSHRA(主观评测指标) [paper](https://www.itu.int/dms_pubrec/itu-r/rec/bs/R-REC-BS.1534-3-201510-I!!PDF-E.pdf)
 
 Tokenizer evaluation
+
 |Tokeniz                 |WER(objective):arrow_down:|VISQOL(objective):arrow_up:|MUSHRA(subjective):arrow_up:|
 |------------------------|--------------------------|---------------------------|-------------------------|
 |GroudTruth              |4.58                      |-                          |91.46                    |
@@ -116,7 +117,7 @@ Tokenizer evaluation
 2. SMOS(Similarity Mean Opinion Score): 6个母语者评测  
 
 |Model|Tokenizer|WER(objective):arrow_down:|SIM(objective):arrow_up:|MOS(subjective):arrow_up:|SMOS(subjective):arrow_up:|
-|-|-|-|-|-|-|-|-|
+|-|-|-|-|-|-|
 |GroundTruth|-|1.9|0.93|4.5|3.96|
 |VALL-E|EnCodec|7.9|0.75|3.08|3.31|
 |USLM|SpeechTokenizer|<span style="color: green;">6.5</span>|<span style="color: green;">0.84</span>|<span style="color: green;">3.63</span>|<span style="color: green;">3.45</span>|
@@ -125,7 +126,7 @@ SLMTokBench
 
 
 | Tokenizer |     | Teacher | MI(TA):arrow_up:| WER(TA):arrow_down:| WER(IP):arrow_down:| SIM(IP):arrow_down:|
-| --- | --- | --- | ---     | ---    | ---     | ---     | ---    |
+| --- | --- | --- | ---     | ---    | ---     | ---     |
 | Groundtruth | - | - | - | - | 4.58 | 1.0 |
 | HuBERT | KM500 | - | 31.2 | 9.88 | 16.26 |0.77|
 | EnCodec | RVQ-1 | - | 16.5 |61.52| 38.34 |0.92|
@@ -145,8 +146,9 @@ SLMTokBench
 
 RVQ的解耦表现  
 1. VC(voice conversion):
+
 |source|reference|WER:arrow_down:|SIM:arrow_up:|
-|-|-|-|-|-|-|
+|-|-|-|-|
 |GT|GT|0.4|0.93|
 |RVQ-1|RVQ-2|2.6|0.72|
 |RVQ-1|RVQ-2:4|11.7|0.80|

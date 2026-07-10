@@ -49,15 +49,16 @@ claude:
 > - 避免删除对语义至关重要的重复信息
 
 ## 数据与训练
-|表征|音频采样率|centroids|BPE vocabulary size|downsampling rate||
+|表征|音频采样率|centroids|BPE vocabulary size|downsampling rate|
 |-|-|-|-|-|
 |离散|16KHz|2000|6000|-|
 |连续|16KHz|-|-|2|
 
 ## 实验结果与结论
 1. 离散表征中K-menas centriods数量和BPE词表大小对ASR任务的识别结果的影响
+
 | SSL model     | Manipulation |Manipulation|WER:arrow_down:|WER:arrow_down:|
-|---------------|--------------|------------|
+|---------------|--------------|------------|---------------|---------------|
 |               | K-Means      | BPE size   | test-clean | test-other |
 | Hubert-Large  | k=1000       | -          | 7.48       | 12.82      |
 |               | k=2000       | -          | 5.02       | 10.55      |
@@ -71,6 +72,7 @@ claude:
 |               | k=2000       | 4000       | 4.88       | 10.62      |
 |               | k=2000       | 6000       | 4.72       | <span style="color: green;">10.45</span>      |
 |               | k=2000       | 8000       | <span style="color: green;">4.62</span>       | 10.82      |
+
 结论：
 1. 离散表征的码本大小增加会提升性能。  
 
@@ -87,8 +89,9 @@ claude:
 
 
 不同任务上两种特征提取模型的结果对比
+
 | SSL model | Token type | ASR (WER:arrow_down:) Librispeech|ASR (WER:arrow_down:) Gigaspeech | PR (PER:arrow_down:) | ST (BLEU:arrow_up:) | KS (ACC:arrow_up:) | IC (ACC:arrow_up:) | ER (ACC:arrow_up:) |
-|----------|------------|------------|-----------|------------|-----------|-----------|-----------|
+|----------|------------|------------|-----------|------------|-----------|-----------|-----------|-----------|
 | HuBERT-Large | Discrete | 4.56 / 9.79 | 19.40 | 9.69 | 22.75 / 20.14 | 93.70 / 93.85 | 57.04 | 38.65 |
 | WavLM-Large | Discrete | 4.72 / 10.45 | 16.34 | <span style="color: green;">9.64</span> | 24.62 / 21.22 | 92.87 / 92.45 | 59.96 | 37.98 |
 | HuBERT-Large | Continuous | 4.91 / 6.43 | 17.45 | 12.84 | 26.63 / 25.42 | 95.38 / 95.70 | 76.84 | 56.72 |
