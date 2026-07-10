@@ -3306,10 +3306,10 @@
 1. 主GPU的计算量相对于worker太大了，并且在主GPU计算反向传播的时候，worker是空闲的。
 2. 由于是master-worker的结构，通信也会是瓶颈，因为master要发送N份权重。
 3. DP其实是个单进程多线程的方案，而Python的GIL是加在进程上的，效率受限。
-<img src="./picture/DP.png" width="500" alt="DP">    </p>
+<img src="../picture/DP.png" width="500" alt="DP">    </p>
 <h3 id="ddp">DDP<a class="headerlink" href="#ddp" title="Permanent link">&para;</a></h3>
 <p>DDP(Distributed Data Parallel)是对DP方案的一种改进，计算过程如图。
-<img src="./picture/DDP.png" width="500" alt="DDP">  <br />
+<img src="../picture/DDP.png" width="500" alt="DDP">  <br />
 1. 训练开始时，模型参数通过一次性广播同步到所有进程（之后不再需要每轮广播完整参数）
 2. 数据通过 DistributedSampler 在各进程间分片，每个进程只处理自己的那部分数据，没有 scatter/gather 的开销
 3. 各进程独立做前向和反向传播，互不干扰
@@ -3320,25 +3320,25 @@
 <p>张量并行（tensor parallel）是对模型的参数进行切分。分为按行切分（Row-wise Parallel）和按列切分（Column-wise Parallel）,这个名称也经常在并行框架里见到，例如megetron中的<a href="https://github.com/NVIDIA/Megatron-LM/blob/main/megatron/core/tensor_parallel/layers.py">TP并行</a>
 由于现在主流架构transformer主要以矩阵乘法为主，所以TP的说明也以矩阵乘为主。下图中的蓝色表示输入数据，黄色表示模型参数的矩阵，红色表示矩阵乘的结果。
 1. 参数按列切分
-<img src="./picture/tp-rowwise.jpeg" width="500" alt="tp_rowwise">  <br />
+<img src="../picture/tp-rowwise.jpeg" width="500" alt="tp_rowwise">  <br />
 矩阵乘法是左矩阵的每行乘右矩阵的每列再求和，得到输出矩阵的一个元素。对参数矩阵的按列切分处理得到的子矩阵相对于未切分的原始矩阵，列是完整的，因此无需切分输入矩阵。但是切分后的矩阵计算完成后是只有结果矩阵的部分列，因此是需要按列拼接结果矩阵得到与不切分等价的结果。<br />
 2. 参数按行切分
-<img src="./picture/tp-colwise.jpeg" width="500" alt="tp_colwise">  <br />
+<img src="../picture/tp-colwise.jpeg" width="500" alt="tp_colwise">  <br />
 按行切分后，参数矩阵的列就变得不完整了，因此无法直接与输入矩阵的完整的行相乘，因此需要对输入矩阵进行按列切分，这种切分方式后的计算得到的结果矩阵的维度与不切分是相同的，但是数值不同。切分后计算得到的结果矩阵需要相加才能得到完整的与未切分等价的结果矩阵。<br />
 工程上的一种优化<br />
 按列切分参数的方案得到的结果矩阵需要按列拼接，按行切分参数的输入矩阵需要按列切分，这两步正好互补，省略掉拼接过程，在按列切分参数的计算后结一个按行切分参数的计算，因为这种并行一般都是发生在不同的GPU上的，省略合并和切分就意味着少了两次GPU通信。
-<img src="./picture/tp-combined.jpeg" width="500" alt="tp_combined">    </p>
+<img src="../picture/tp-combined.jpeg" width="500" alt="tp_combined">    </p>
 <h3 id="_5">流水线并行<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <p>流水线并行指的是将模型的不同module放在不同的GPU上，如图所示，主要优化方式是消除计算bubble，但是因为没有仔细研究过消除bubble的优化细节，这里不做介绍。
-<img src="./picture/PP.png" width="500" alt="PP">    </p>
+<img src="../picture/PP.png" width="500" alt="PP">    </p>
 <h2 id="moe">MOE(专家)并行<a class="headerlink" href="#moe" title="Permanent link">&para;</a></h2>
 <p>现在的MOE结构的模型越来越多，而常见的MOE结构的expert实际上就是一个FFN的module，有参数规模一致，计算量基本一致的特征，非常适合将不同的expert放置在不同的GPU上。并行方案如图所示。
-<img src="./picture/MOE_parallel.png" width="500" alt="MOE_Parallel">    </p>
+<img src="../picture/MOE_parallel.png" width="500" alt="MOE_Parallel">    </p>
 <h2 id="zerozero-redundancy-optimizer">ZeRO(Zero Redundancy Optimizer)<a class="headerlink" href="#zerozero-redundancy-optimizer" title="Permanent link">&para;</a></h2>
 <p>ZeRO算是比较系统分析并行化的显存占用和分级策略的方案。<br />
 首先梳理下在训练模型过程中的显存占用情况。为了通用，假设用Adam等有一二阶动量的优化器（这种优化器相对于SGD有额外的存储需求），训练过程中持续需要的存储空间分为一下几种：模型参数，模型参数对应的梯度，优化器状态。（不包含buffer，但是buffer也占空间）。<br />
 这里着重解释下优化器状态：优化器状态就是Adam等稍微复杂的优化器在训练过程种存储的辅助变量，例如一二阶动量，但是不包含梯度。ZeRO把并行方案分为三级，
-<img src="./picture/ZeRO.png" width="500" alt="ZeRO">  <br />
+<img src="../picture/ZeRO.png" width="500" alt="ZeRO">  <br />
 接下来我们计算每张卡上在不同的ZeRO配置下的通信量，先约定参数总量为<span class="arithmatex">\(\Psi\)</span>，并行数量为<span class="arithmatex">\(N\)</span>。在计算通信量时，因为通信是成对的，所以只计算发送或接受，算一个即可。
 解释下为什么算每张卡：因为在类似于DDP的分布式结构下，每张卡做的事情基本都是相同的，不存在一个master进程要做非常多额外的计算，也会在介绍通信的Ring-AllReduce算法种看到计算和通信的确是基本在GPU间均分的。所以想要知道计算合和通信效率，看单卡即可，这也是Ring-AllReduce算法的创新之处：让通信开销和规模几乎无关。<br />
 1. ZeRO-1<br />

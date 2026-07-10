@@ -3188,7 +3188,7 @@
 
 <h1 id="_1">蒙特卡洛与时序差分<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>当环境模型未知时，我们无法枚举 <span class="arithmatex">\(P(s'|s,a)\)</span> 来做 Bellman 期望备份，只能让智能体与环境交互，拿到轨迹后估计价值函数。蒙特卡洛（Monte Carlo, MC）和时序差分（Temporal Difference, TD）是两种基本估计方式。</p>
-<p><img src="./picture/mc_vs_td.png" width="700" alt="mc vs td"></p>
+<p><img src="../picture/mc_vs_td.png" width="700" alt="mc vs td"></p>
 <h2 id="_2">蒙特卡洛方法<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>MC 的思想非常直接：等一个 episode 结束，计算真实回报 <span class="arithmatex">\(G_t\)</span>，然后用它更新状态价值：</p>
 <div class="arithmatex">\[

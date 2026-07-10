@@ -3188,7 +3188,7 @@
 
 <h1 id="_1">策略梯度<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>价值型方法先学习 <span class="arithmatex">\(Q(s,a)\)</span>，再通过 <span class="arithmatex">\(\arg\max_a Q(s,a)\)</span> 选择动作。策略梯度（Policy Gradient, PG）换了一个角度：直接学习策略 <span class="arithmatex">\(\pi_\theta(a|s)\)</span>，让高回报轨迹出现的概率变大。</p>
-<p><img src="./picture/policy_gradient_pipeline.png" width="700" alt="policy gradient pipeline"></p>
+<p><img src="../picture/policy_gradient_pipeline.png" width="700" alt="policy gradient pipeline"></p>
 <h2 id="_2">目标函数<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>策略参数为 <span class="arithmatex">\(\theta\)</span>，轨迹为：</p>
 <div class="arithmatex">\[

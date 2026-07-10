@@ -3088,14 +3088,14 @@
 1. Transducer允许一个input对应多个output
 2. 通过一个predictor网络实现LM  </p>
 <p>Transducer的核心计算过程如图：<br />
-<img src="./picture/transducer.png" width="500" alt="ctc_train">  <br />
+<img src="../picture/transducer.png" width="500" alt="ctc_train">  <br />
 因为<span class="arithmatex">\(y_{u}\)</span>和<span class="arithmatex">\(x_{i}\)</span>的时刻不同步了，需要制定<span class="arithmatex">\(y\)</span>和<span class="arithmatex">\(x\)</span>各自时间步的推进规则：<br />
 首先明确transducer的输出规则，可以插入blank，但是字符本身不能像CTC一样重复：<span class="arithmatex">\(z = \varnothing, C, A, \varnothing, T, \varnothing, \varnothing\)</span><br />
 1. 当<span class="arithmatex">\(h_{t,u}\)</span>对应 <span class="arithmatex">\(\varnothing\)</span> 时，<span class="arithmatex">\(x\)</span>的时间步推进一步：<span class="arithmatex">\(t = t+1\)</span><br />
 2. 当<span class="arithmatex">\(h_{t,u}\)</span>对应非<span class="arithmatex">\(\varnothing\)</span>时，<span class="arithmatex">\(y\)</span>的时间步推进一步：<span class="arithmatex">\(u = u+1\)</span><br />
 3. <span class="arithmatex">\(t = T+1\)</span>，计算完成。</p>
 <p>training的计算规则。把<span class="arithmatex">\(z = \varnothing, C, A, \varnothing, T, \varnothing, \varnothing\)</span>对应的转移图画出来。  </p>
-<p><img src="./picture/transducer_train.png" width="500" alt="ctc_train"> <br />
+<p><img src="../picture/transducer_train.png" width="500" alt="ctc_train"> <br />
 其实类似于CTC，可以从左上角走到右下角的所有路径都是合法的，但是transducer的转移规则更简单， 一个节点只能来自于左边节点或者上边节点。然后类比CTC的计算方式，就可以得到所有合法的路径的概率和。这样就可以完成训练。</p>
 <p>推理的规则：transducer的greedy的解码相当简单，因为已经有了LM，直接按照两个维度的时间步推进，消耗完x的时间步即可，得到的结果也是比较符合LM的上下文依赖的。</p>
 

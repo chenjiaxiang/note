@@ -3206,7 +3206,7 @@
 
 <h1 id="dqn-q">DQN：用神经网络近似 Q 表<a class="headerlink" href="#dqn-q" title="Permanent link">&para;</a></h1>
 <p>Q-learning 用表格存储 <span class="arithmatex">\(Q(s,a)\)</span>。当状态是图像、连续向量或高维传感器输入时，表格无法覆盖所有状态。DQN（Deep Q-Network）用神经网络近似动作价值函数，把 Q-learning 推到高维状态空间。</p>
-<p><img src="./picture/dqn_training_loop.png" width="700" alt="dqn training loop"></p>
+<p><img src="../picture/dqn_training_loop.png" width="700" alt="dqn training loop"></p>
 <h2 id="q-q">从 Q 表到 Q 网络<a class="headerlink" href="#q-q" title="Permanent link">&para;</a></h2>
 <p>离散动作场景下，DQN 通常输入状态 <span class="arithmatex">\(s\)</span>，输出每个动作的 Q 值：</p>
 <div class="arithmatex">\[

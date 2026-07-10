@@ -3308,7 +3308,7 @@
 <p>HMM全称为Hidden Markov Model，其中markov部分是描述有依赖关系的离散随机过程的，称为markov chain。</p>
 <h2 id="markov-chain">Markov Chain<a class="headerlink" href="#markov-chain" title="Permanent link">&para;</a></h2>
 <p>依赖关系为一个节点只依赖前置节点，依赖的数量称为阶，例如<span class="arithmatex">\(S_{t+1}\)</span>只依赖<span class="arithmatex">\(s_{t}\)</span>，则称为1阶markov  chain。概率描述为：<span class="arithmatex">\(P(S_{t+1}​=x∣S_t​,S_{t−1}​,…,S_1​)=P(S_{t+1}=s∣S_t​)\)</span>，其中<span class="arithmatex">\(t\)</span>是时间步，<span class="arithmatex">\(S_{t}\)</span>是在时刻<span class="arithmatex">\(t\)</span>的随机变量，s是随机变量的取值。</p>
-<p><img src="./picture/hmm.png" width="500" alt="hmm">  </p>
+<p><img src="../picture/hmm.png" width="500" alt="hmm">  </p>
 <p>描述一个1阶markov chain，需要的信息是转移概率：在一个状态下转移到另一个状态的概率。公式描述：<span class="arithmatex">\(p_{ij}​=P(S_{t+1​}=j∣S_t​=i)\)</span>，当有n个离散状态时，所有状态之间的转移矩阵如下：
 $$
 P = \begin{pmatrix}
@@ -3383,7 +3383,7 @@ $$
 <p>和逐帧的贪心解码不同，Viterbi不在当前时刻直接选出解码结果，而是记录当前帧的每个状态的概率值，以及从前一帧的哪个状态转移过来的概率值是最大的，这个信息是可以回溯的，当最后一帧计算完成后，可以知道最后一帧的哪个状态是概率最大的，然后用记录的回溯信息反向把每帧的隐状态推测出来。这就是Viterbi解码的过程。当状态空间很大的时候，解码过程需要记录的数据和计算量很大，因此可以做个折衷，只保留部分概率较高的状态，允许一定的误差来降低计算和内存开销，这就是接下来要介绍的Beam Search解码。</p>
 <h3 id="beam-search">Beam Search<a class="headerlink" href="#beam-search" title="Permanent link">&para;</a></h3>
 <p>Beam Search的出发点在上面介绍过了，这里只做补充。Beam Search约定一个数值<span class="arithmatex">\(N\)</span>，这个值的含义是在解码过程中只保留N个候选，加快解码速度。
-<img src="./picture/hmm_beam_search.png" width="500" alt="hmm_beam_search">  </p>
+<img src="../picture/hmm_beam_search.png" width="500" alt="hmm_beam_search">  </p>
 
 
 

@@ -3248,7 +3248,7 @@
 <h2 id="_1">目标<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>比较在SLM任务中, 使用离散token和连续token的优劣势</p>
 <h2 id="_2">离散和连续在论文中的定义<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p><img src="../image/token_compare.png" alt="disentanglement" width="200"/></p>
+<p><img src="../../image/token_compare.png" alt="disentanglement" width="200"/></p>
 <ol>
 <li>由feature extractor输出的token经过线性变化后直接使用的方式称为连续</li>
 <li>经过VQ和RVQ处理后再送入后续模型的token处理方式称为离散。（离散是token取值空间变得离散, 只能取有限个数的值。 离散值数量上界： <span class="arithmatex">\(V_{upper\_bound} = \prod_i code\_num\_of\_layer_i\)</span>）</li>
@@ -3511,7 +3511,7 @@ claude:</p>
 <li>WavLM-Large和continous结合的方式在在大多数任务上效果都是最优</li>
 </ol>
 <p>收敛速度对比</p>
-<p><img src="../image/convergence.png" alt="convergence" width="200"/></p>
+<p><img src="../../image/convergence.png" alt="convergence" width="200"/></p>
 <ol>
 <li>离散token相对于连续token收敛快很多。<br />
 讨论：
@@ -3519,7 +3519,7 @@ claude:</p>
 - 增加连续token的收敛速度的策略：先用离散的训收敛, 然后去除VQ模块, 继续用连续token训练。</li>
 </ol>
 <p>token利用不平衡性分析
-<img src="../image/token_imbalance.png" alt="token_imblance" width="200"/></p>
+<img src="../../image/token_imbalance.png" alt="token_imblance" width="200"/></p>
 <ol>
 <li>论文指出离散后的token有严重的数据不平衡问题(长尾效应严重)</li>
 <li>但是提出的针对这种问题的缓解办法是使用连续表征(听起来不合理)</li>
@@ -3527,7 +3527,7 @@ claude:</p>
 <p>讨论：
 - 离散是连续的一种近似。离散在单个token上的不平衡性应该会对应在连续token表征的空间区域上的不平衡性。可能BPE这种方式能够对长尾效应有一定的缓解。</p>
 <p>不同层级特征对应的WER</p>
-<p><img src="../image/layer_for_wer.png" alt="layer_for_wer" width="200"/></p>
+<p><img src="../../image/layer_for_wer.png" alt="layer_for_wer" width="200"/></p>
 <ol>
 <li>不同层捕获的信息重点可能不同, 导致适配不同的任务  </li>
 </ol>

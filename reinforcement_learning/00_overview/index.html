@@ -3170,10 +3170,10 @@
 
 <h1 id="_1">强化学习综述：从试错到可泛化的决策系统<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>强化学习（Reinforcement Learning, RL）研究的是一个智能体如何通过和环境交互来学习决策。它不像监督学习那样直接给出“正确标签”，而是只给出奖励信号：某个动作执行之后，环境会返回新的状态和奖励，智能体要从这些反馈中推断“什么行为长期来看更好”。</p>
-<p><img src="./picture/rl_overview_map.png" width="700" alt="reinforcement learning overview"></p>
+<p><img src="../picture/rl_overview_map.png" width="700" alt="reinforcement learning overview"></p>
 <h2 id="_2">基本问题<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>强化学习问题可以压缩成一个闭环：</p>
-<p><img src="./picture/agent_environment_loop.png" width="650" alt="agent environment loop"></p>
+<p><img src="../picture/agent_environment_loop.png" width="650" alt="agent environment loop"></p>
 <p>在时刻 <span class="arithmatex">\(t\)</span>，智能体看到状态 <span class="arithmatex">\(s_t\)</span>，选择动作 <span class="arithmatex">\(a_t\)</span>，环境返回奖励 <span class="arithmatex">\(r_t\)</span> 和下一个状态 <span class="arithmatex">\(s_{t+1}\)</span>。学习目标不是让某一步奖励最大，而是让长期回报最大：</p>
 <div class="arithmatex">\[
 G_t=r_t+\gamma r_{t+1}+\gamma^2r_{t+2}+\cdots

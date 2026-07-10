@@ -3206,7 +3206,7 @@
 
 <h1 id="ppo">PPO：把策略更新限制在可靠范围内<a class="headerlink" href="#ppo" title="Permanent link">&para;</a></h1>
 <p>PPO（Proximal Policy Optimization）是策略梯度家族里非常常用的算法。它的核心目标不是提出一个全新的学习信号，而是让策略更新别走得太远。</p>
-<p><img src="./picture/ppo_clip_objective.png" width="700" alt="ppo clip objective"></p>
+<p><img src="../picture/ppo_clip_objective.png" width="700" alt="ppo clip objective"></p>
 <h2 id="ppo_1">为什么需要 PPO<a class="headerlink" href="#ppo_1" title="Permanent link">&para;</a></h2>
 <p>普通策略梯度用当前策略采样，再用这些样本更新当前策略。问题是策略一更新，数据分布就变了。旧数据来自 <span class="arithmatex">\(\pi_{\theta_{\text{old}}}\)</span>，新策略是 <span class="arithmatex">\(\pi_\theta\)</span>，如果两者差距太大，用旧数据估计新策略梯度就会不稳定。</p>
 <p>重要性采样可以把旧策略数据修正到新策略：</p>
